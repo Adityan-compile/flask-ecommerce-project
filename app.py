@@ -4,9 +4,11 @@ import sqlalchemy
 
 app = Flask(__name__)
 
-@app.route("/")
+
+@app.route("/home")
 def home():
-    return render_template("index.html.jinja", title="home", content="Hello")
+    return render_template("index.html.jinja", title="home", content="Hello"), 200
+    
 
 
 if "__name__" == "__main__":
