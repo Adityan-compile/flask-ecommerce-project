@@ -4,6 +4,12 @@
 {{title}}
 {% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
 {% block body %}
-{{content}}
+<header class="head">
+    {{content}}
+</header>
 {% endblock %}
