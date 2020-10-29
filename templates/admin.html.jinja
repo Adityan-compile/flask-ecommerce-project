@@ -1,4 +1,4 @@
-{% extends "base.html.jinja" %}
+{% extends "admin-template.html.jinja" %}
 
 
 {% block title %}
@@ -8,37 +8,65 @@ Dashboard
 {% block content %}
 
 <br />
-<h2 class="text-monospace">Products</h2>
+<h2 class="heading text-center text-monospace">Products</h2>
 <br />
 
-<table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">S.NO</th>
-        <th scope="col">Name</th>
-        <th scope="col">ID</th>
-        <th scope="col">Image</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-      </tr>
-    </tbody>
-  </table>
+<table class="table mx-auto">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">S.NO</th>
+      <th scope="col">PRODUCT NAME</th>
+      <th scope="col">PRODUCT ID</th>
+      <th scope="col">PRODUCT PRICE</th>
+      <th scope="col">PRODUCT IMAGE</th>
+      <th scope="col">EDIT/DELETE PRODUCT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>img</td>
+     <td>
+       <a href="{{url_for('admintasks')}}" class="btn btn-primary">Edit</a>
+      <a href="{{url_for('admintasks')}}" class="btn btn-danger" >Delete</a>
+    </td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>img</td>
+      <td>
+       <a href="{{url_for('admintasks')}}" class="btn btn-primary">Edit</a>
+      <a href="{{url_for('admintasks')}}" class="btn btn-danger" >Delete</a>
+    </td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>img</td>
+     <td>
+       <a href="{{url_for('admintasks')}}" class="btn btn-primary">Edit</a>
+      <a href="{{url_for('admintasks')}}" class="btn btn-danger" >Delete</a>
+    </td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>img</td>
+     <td>
+       <a href="{{url_for('admintasks')}}" class="btn btn-primary">Edit</a>
+      <a href="{{url_for('admintasks')}}" class="btn btn-danger" >Delete</a>
+    </td>
+    </tr>
+  </tbody>
+</table>
 {% endblock %}

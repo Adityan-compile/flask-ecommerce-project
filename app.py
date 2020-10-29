@@ -27,8 +27,14 @@ def home():
 
 @app.route('/admin')
 @app.route('/admin/home')
+@app.route('/admin/products')
 def admin():
-   return render_template("admin.html.jinja")   
+   return render_template("admin.html.jinja")
+
+@app.route('/admin/delete')
+@app.route('/admin/edit')
+def admintasks():
+   return render_template('admin.html.jinja')   
 
 @app.errorhandler(404)
 def error(e):
