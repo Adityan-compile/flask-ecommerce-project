@@ -1,0 +1,49 @@
+{% extends "admin-template.html.jinja" %}
+
+
+{% block title %} Create Product {% endblock %}
+
+{% block content %}
+
+<br />
+<p class="h2 text-center text-monospace">Create Product</p>
+
+<form class="p-5">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="productName">Product Name:</label>
+        <input type="text" class="form-control" id="productName">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="productPrice">Price:</label>
+        <input type="text" class="form-control" id="productPrice">
+      </div>
+    </div>
+    <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="productBrand">Brand</label>
+      <input type="text" class="form-control" id="productBrand">
+    </div>
+    <div class="form-group col-md-6">
+        <label for="stockStatus">Stock Status</label>
+        <select id="stockstatus" class="form-control">
+          <option selected>In Stock</option>
+          <option>Out of Stock</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="productDescription">Description:</label>
+      <textarea type="text" class="form-control" id="productDescription" maxlength="1000">
+      </textarea>
+    </div>
+    <div class="form-group">
+      <div class="form-check">
+          <label for="productImage">Upload Image:</label>
+        <input type="file" id="productImage" name="filename">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+  </form>
+
+{% endblock %}

@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'products.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 
 db = SQLAlchemy(app)
@@ -22,6 +22,7 @@ class products(db.Model):
     _product_brand = db.coloumn(db.String(100))
     _product_img = db.coloumn(db.String(100))
     _product_description = db.coloumn(db.String(2000))
+    _product_stock = db.coloumn(db.String(10))
     def __init__(self):
         self._id = _id
         self._product_name = _product_name
@@ -29,6 +30,7 @@ class products(db.Model):
         self._product_brand = _product_brand
         self._product_img = _product_img
         self._product_description = _product_description
+        self._product_stock = _product_stock
 
 
 
@@ -43,3 +45,23 @@ class cart(db.Model):
 		self.customer_id=customer_id
 		self.product_name=product_name
 		self.product_image=product_image
+
+
+class users(db.Model):
+    user_id=db.coloumn(db.integer,primary_key=True)
+    user_name=db.coloumn(db.String(500))
+    user_email=db.coloumn(db.string(500))
+    user_password=db.coloumn(db.String(500))
+    user_address=db.coloumn(db.String(1000))
+    user_city=db.coloumn(db.String(500))
+    user_state=db.coloumn(db.String(500))
+    user_zip=db.coloumn(db.String(50))
+    def __init__(self, user_id, user_name, user_email, user_password, user_address,  user_city, user_state, user_zip):
+        self.user_id=user_id
+        self.user_name=user_name
+        self.user_email=user_email
+        self.user_password=user_password
+        self.user_address=user_address
+        self.user_city=user_city
+        self.user_state=user_state
+        self.user_zip=user_zip

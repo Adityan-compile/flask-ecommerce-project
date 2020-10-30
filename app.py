@@ -53,6 +53,10 @@ def addtocart():
 def signup():
    return render_template("signup.html.jinja")
 
+@app.route('/admin/create')
+def create():
+   return render_template("add-products.html.jinja")
+
 @app.errorhandler(404)
 def error(e):
    return render_template("404.html.jinja")
