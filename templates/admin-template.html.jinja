@@ -10,6 +10,9 @@
       integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
       crossorigin="anonymous"
     />
+
+    <link rel="icon" href="{{url_for('static', filename='images/shopping-cart.png')}}">
+
     {% block head %}
      {% endblock %}
   </head>
@@ -40,6 +43,24 @@
 
     {% block content %}
      {% endblock %}
+
+     <footer class=" footer fixed-bottom page-footer sticky-bottom card-footer">
+      <div class="text-center container-fluid ">
+        <small>
+        Title icon made by
+        <a
+          href="https://www.flaticon.com/authors/gregor-cresnar"
+          title="Gregor Cresnar"
+          >Gregor Cresnar</a
+        >
+        from
+        <a href="https://www.flaticon.com/" title="Flaticon"
+          >www.flaticon.com</a
+        >
+        </small>
+      </div>
+    </footer>
+
     
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

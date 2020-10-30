@@ -1,7 +1,7 @@
 {% extends "base.html.jinja" %}
 
 {% block title %}
-{{ title }}
+     Home
 {% endblock %} 
 
 {% block head %}
@@ -23,8 +23,9 @@
           alt="..."
         />
         <div class="card-body">
-          <p class="card-text">I Phone 11</p>
+          <p class="text-monospace">I Phone 11</p>
         </div>
+        <a href="{{url_for('addtocart')}}" class="btn btn-primary">Add to cart</a>
       </div>
       <div class="card" style="width: 10rem">
         <img

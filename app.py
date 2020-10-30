@@ -45,14 +45,18 @@ def admintasks():
 def login():
    return render_template("login.html.jinja")
 
+@app.route('/cart')
+def addtocart():
+   return render_template("cart.html.jinja")
+
 @app.route('/signup')
 def signup():
    return render_template("signup.html.jinja")
 
 @app.errorhandler(404)
 def error(e):
-  return render_template("404.html.jinja"), 200
+   return render_template("404.html.jinja")
 
-if "__name__" == "__main__":
-    #db.create_all()
-    app.run(debug=True)
+if '__name__' == '__main__':
+   #db.create_all()
+   app.run(debug=True)
