@@ -39,7 +39,15 @@ def admin():
 @app.route('/admin/delete')
 @app.route('/admin/edit')
 def admintasks():
-   return render_template('admin.html.jinja')   
+   return render_template('admin.html.jinja') 
+
+@app.route('/login')  
+def login():
+   return render_template("login.html.jinja")
+
+@app.route('/signup')
+def signup():
+   return render_template("signup.html.jinja")
 
 @app.errorhandler(404)
 def error(e):
