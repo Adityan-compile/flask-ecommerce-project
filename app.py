@@ -2,13 +2,17 @@
 from flask import Flask, render_template, url_for, request, session, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
-from models import *
+from config import *
 
 
 @app.route('/home')
 @app.route('/')
 def home():
-    return render_template("index.html.jinja")
+    if user in session:
+        return render_template("index.html.jinja")
+    else:
+        flash('You are not logged in')
+        return redirect('login')
 
 
 @app.route('/admin')
@@ -28,12 +32,12 @@ def admintasks():
 @app.route('/login', method=['POST', 'GET'])
 def login():
     if request.method == "POST":
-        session.permanent=True
+        session.permanent = True
         username = request.form['Name']
         email = request.form['Email']
         password = request.form['Password']
         found_user = Users.query.filter_by(name=username).first()
-        if found_user.user_name == username && found_user.user_password == bcrypt.generate_password_hash(password):
+        if found_user.user_name == username & & found_user.user_password == bcrypt.generate_password_hash(password):
            session['user'] = found_user.user_name
            session['email'] = found_user.user_email
            session['address'] = found_user.user_address
@@ -111,5 +115,4 @@ def error(e):
 
 
 if '__name__' == '__main__':
-    db.create_all()
     app.run(debug=True)
