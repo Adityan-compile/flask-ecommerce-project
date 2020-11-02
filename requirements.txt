@@ -90,7 +90,7 @@ patch-ng==1.17.4
 pbr==3.1.1
 pexpect==4.2.1
 phonenumbers==8.12.11
-Pillow==5.1.0
+Pillow==7.1.0
 pluginbase==1.0.0
 plyer==1.4.3
 positional==1.1.1
