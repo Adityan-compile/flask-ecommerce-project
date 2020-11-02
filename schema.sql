@@ -26,22 +26,30 @@ DROP TABLE IF EXISTS Users;
 
 DROP TABLE IF EXISTS Orders;
      CREATE TABLE Orders(
-     order_id integer PRIMARY KEY AUTOINCREMENT,
-     customer_name text NOT NULL,
-     customer_email text NOT NULL,
-     customer_address text NOT NULL,
-     customer_city text NOT NULL,
-     customer_state text NOT NULL,
-     customer_zip text NOT NULL,
-     total_order_price text NOT NULL
+            order_id integer PRIMARY KEY AUTOINCREMENT,
+            customer_name text NOT NULL,
+            customer_email text NOT NULL,
+            customer_address text NOT NULL,
+            customer_city text NOT NULL,
+            customer_state text NOT NULL,
+            customer_zip text NOT NULL,
+            customer_phone text NOT NULL,
+            total_order_price text NOT NULL
      );
 
 
 DROP TABLE IF EXISTS Cart;
      CREATE TABLE Cart(
-     serial_number integer PRIMARY KEY AUTOINCREMENT,
-     product_name text NOT NULL,
-     customer_name text NOT NULL,
-     product_image text NOT NULL,
-     product_price text NOT NULL
+            serial_number integer PRIMARY KEY AUTOINCREMENT,
+            product_name text NOT NULL,
+            customer_name text NOT NULL,
+            product_image text NOT NULL,
+            product_price text NOT NULL
+     );
+
+DROP TABLE IF EXISTS Admins;
+     CREATE TABLE Admins(
+            id integer PRIMARY KEY AUTOINCREMENT,
+            admin_name text NOT NULL,
+            admin_password text NOT NULL
      );
