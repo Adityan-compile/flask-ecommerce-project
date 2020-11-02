@@ -83,6 +83,9 @@ def signup():
         pw_hash =  bcrypt.generate_password_hash(Password)
         db.session.add(pw_hash)
 
+        Phonenumber = Users(phonenumber, "")
+        db.session.add(Phonenumber)
+
         Address = Users(address, "")
         db.session.add(Address)
 
@@ -94,6 +97,7 @@ def signup():
 
         Zip_code = Users(zip_code, "")
         db.session.add(Zip_code)
+
         db.session.commit()
 
         session['user'] = username
