@@ -1,9 +1,9 @@
 import os
 from datetime import timedelta
-from flask import Blueprint, Flask, flash, redirect, render_template, request, session, url_for
-from flask_bcrypt import Bcrypt
+from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 
