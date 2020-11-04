@@ -21,7 +21,7 @@ colorama==0.3.7
 command-not-found==0.3
 conan==1.30.2
 configparser==5.0.1
-cryptography==2.9.2
+cryptography==3.2
 cupshelpers==1.0
 Cython==0.29.21
 dataclasses==0.7
