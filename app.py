@@ -38,8 +38,8 @@ def login():
         session.permanent = True
         username = request.form['Name']
         password = request.form['Password']
-        found_user = Users.query.filter_by(name=username).first()
-        found_admin = Admins.query.filter_by(name=username).first()
+        found_user = Users.query.filter_by(user_name=username).first()
+        found_admin = Admins.query.filter_by(admin_name=username).first()
         if found_user.user_name == username:
             if bcrypt.check_password_hash(found_user.password, password):
                       db.session.commit()
@@ -56,7 +56,7 @@ def login():
             else:
                 flash('Incorrect username or password')
                 return redirect('login')
-       elif "user" in session:
+        elif "user" in session:
                 flash('Already Logged in')
                 return redirect('home')
         else:
@@ -73,14 +73,16 @@ def logout():
 
 @app.route('/cart')
 def addtocart():
-    return render_template("cart.html.jinja")
+    if 'user' in session:
+        username = session.get('user')
+        return render_template("cart.html.jinja", cart=Cart.query.filter_by(customer_name=username).all())
 
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
     if request.method == 'POST':
-        user_name = request.form['Name']
-        user_email = request.form['Email']
+        username = request.form['Name']
+        useremail = request.form['Email']
         password = request.form['Password']
         phonenumber = request.form['Phonenumber']
         address = request.form['Address']
@@ -88,31 +90,10 @@ def signup():
         state = request.form['State']
         zip_code = request.form['Zip']
 
-        username = Users(user_name, "")
-        db.session.add(username)
-
-        email = Users(user_email, "")
-        db.session.add(email)
-        
-        Password = Users(password, "")
         pw_hash =  bcrypt.generate_password_hash(Password)
-        db.session.add(pw_hash)
 
-        Phonenumber = Users(phonenumber, "")
-        db.session.add(Phonenumber)
-
-        Address = Users(address, "")
-        db.session.add(Address)
-
-        City = Users(city, "")
-        db.session.add(City)
-
-        State = Users(city, "")
-        db.session.add(State)
-
-        Zip_code = Users(zip_code, "")
-        db.session.add(Zip_code)
-
+        user = Users(user_name=username, user_email=useremail, user_address=address, user_password=pw_hash, user_phonenumber=phonenumber, user_city=city, user_state=state, user_zip=zip_code)
+        db.session.add(user)
         db.session.commit()
 
         session['user'] = username

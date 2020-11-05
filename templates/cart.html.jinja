@@ -1,1 +1,35 @@
 {% extends "base.html.jinja" %}
+
+{% block title %} Cart | E-Com {% endblock %}
+
+{% block body %}
+
+<br />
+<p class="h2 text-center text-monospace">Cart</p>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">S.NO</th>
+        <th scope="col">Product Name</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Price</th>
+        <th scope="col">Image</th>
+        <th scope="col">Change Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for x in cart %}
+      <tr>
+        <th scope="row">{{self.serial_number}}</th>
+        <td>{{self.product_name}}</td>
+        <td>{{self.product_quantity}}</td>
+        <td>{{self.product_price}}</td>
+        <td><img src="{{self.product_image}}"></td>
+        <td><form action="#" method="POST"><input type="number"></form></td>
+        {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+
+{% endblock %}
