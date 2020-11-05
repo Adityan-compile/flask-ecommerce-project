@@ -24,50 +24,19 @@ Dashboard
     </tr>
   </thead>
   <tbody>
+    {% for x in products %}
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>img</td>
+      <th scope="row">{{self.serial_number}}</th>
+      <td>{{self.product_name}}</td>
+      <td>{{self.product_id}}</td>
+      <td>{{self.product_price}}</td>
+      <td><img src="{{url_for(folder='static' filename='images/self.product_image')}}" alt=""></td>
      <td>
        <a href="{{url_for('admintasks')}}" class="btn btn-primary">Edit</a>
       <a href="{{url_for('admintasks')}}" class="btn btn-danger" >Delete</a>
     </td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>img</td>
-      <td>
-       <a href="{{url_for('admintasks')}}" class="btn btn-primary">Edit</a>
-      <a href="{{url_for('admintasks')}}" class="btn btn-danger" >Delete</a>
-    </td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>img</td>
-     <td>
-       <a href="{{url_for('admintasks')}}" class="btn btn-primary">Edit</a>
-      <a href="{{url_for('admintasks')}}" class="btn btn-danger" >Delete</a>
-    </td>
-    </tr>
-    <tr>
-      <th scope="row">4</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>img</td>
-     <td>
-       <a href="{{url_for('admintasks')}}" class="btn btn-primary">Edit</a>
-      <a href="{{url_for('admintasks')}}" class="btn btn-danger" >Delete</a>
-    </td>
-    </tr>
+    {% endfor %}
   </tbody>
 </table>
 </div>

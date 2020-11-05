@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS Users;
             user_email text NOT NULL,
             user_address text NOT NULL,
             user_password text NOT NULL,
+            user_phonenumber text NOT NULL,
             user_city text NOT NULL,
             user_state text NOT NULL,
             user_zip text NOT NULL
@@ -44,6 +45,7 @@ DROP TABLE IF EXISTS Cart;
             product_name text NOT NULL,
             customer_name text NOT NULL,
             product_image text NOT NULL,
+            product_quantity integer NOT NULL,
             product_price text NOT NULL
      );
 
