@@ -21,7 +21,8 @@ def home():
 @app.route('/admin/')
 def admin():
     if "admin" in session:
-        return render_template("admin.html.jinja")
+        Products=Products.query.all()
+        return render_template("admin.html.jinja", products=Products, image="images/"+Products.product_image)
     else:
         return redirect('login')
 
@@ -75,7 +76,13 @@ def logout():
 def addtocart():
     if 'user' in session:
         username = session.get('user')
-        return render_template("cart.html.jinja", cart=Cart.query.filter_by(customer_name=username).all())
+        cart=Cart.query.filter_by(customer_name=username).all()
+        return render_template("cart.html.jinja", serialnumber=cart.serial_number, productname=cart.product_name, productquantity=cart.product_quantity, productprice=cart.product_price )
+
+
+@app.route('/checkout')
+def checkout():
+    return render_template('checkout.html.jinja')
 
 
 @app.route('/signup', methods=['POST', 'GET'])

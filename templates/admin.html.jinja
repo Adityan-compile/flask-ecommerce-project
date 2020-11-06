@@ -26,11 +26,11 @@ Dashboard
   <tbody>
     {% for x in products %}
     <tr>
-      <th scope="row">{{self.serial_number}}</th>
-      <td>{{self.product_name}}</td>
-      <td>{{self.product_id}}</td>
-      <td>{{self.product_price}}</td>
-      <td><img src="{{url_for(folder='static' filename='images/self.product_image')}}" alt=""></td>
+      <th scope="row">{{products.serial_number}}</th>
+      <td>{{products.product_name}}</td>
+      <td>{{products.product_id}}</td>
+      <td>{{products.product_price}}</td>
+      <td><img src="{{url_for('static', filename=image)}}" height="50px" width="50px"></td>
      <td>
        <a href="{{url_for('admintasks')}}" class="btn btn-primary">Edit</a>
       <a href="{{url_for('admintasks')}}" class="btn btn-danger" >Delete</a>
