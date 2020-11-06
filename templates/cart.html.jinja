@@ -21,11 +21,11 @@
     <tbody>
       {% for x in cart %}
       <tr>
-        <th scope="row">{{self.serial_number}}</th>
-        <td>{{self.product_name}}</td>
-        <td>{{self.product_quantity}}</td>
-        <td>{{self.product_price}}</td>
-        <td><img src="{{self.product_image}}"></td>
+        <th scope="row">{{serialnumber}}</th>
+        <td>{{productname}}</td>
+        <td>{{productquantity}}</td>
+        <td>{{productprice}}</td>
+        <td><img src="{{productimage}}"></td>
         <td><form action="#" method="POST"><input type="number"></form></td>
         {% endfor %}
       </tr>
