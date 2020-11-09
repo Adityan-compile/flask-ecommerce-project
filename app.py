@@ -16,7 +16,7 @@ from models import Product
 @app.route('/')
 def home():
     if "user" in session:
-        return render_template("index.html.jinja" product=Product.query.all())
+        return render_template("index.html.jinja", product=Product.query.all())
     else:
         flash('You are not logged in')
         return redirect('login')
@@ -38,6 +38,17 @@ def admin():
 @app.route('/admin/edit')
 def admintasks():
     return render_template('admin.html.jinja')
+
+
+@app.route('/profile')
+def profile():
+    if 'user' in session:
+        username=session.get('user')
+        user= User.query.filter_by(user_name=username).first()
+        return render_template('profile.html.jinja', info=user)
+    else:
+        return redirect('login')
+        flash('Please Login')
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -92,10 +103,17 @@ def cart():
         return render_template("cart.html.jinja", serialnumber=cart.serial_number, productname=cart.product_name, productquantity=cart.product_quantity, productprice=cart.product_price )
 
 
-@app.route('/checkout')
+@app.route('/checkout' , methods=['POST', 'GET'])
 def checkout():
-    return render_template('checkout.html.jinja')
-
+    if 'user' in session:
+        if request.method == 'GET':
+             return render_template('checkout.html.jinja')
+        else:
+            username=session.get('user')
+            user=User.query.filter_by(user_name=username).first()
+            order = Order(customer_name=user.user_name, customer_address=user.user_address, customer_city=user.user_city, customer_state=user.user_state, customer_phone=user.user_phonenumber, customer_zip=user.user_zip)
+    else:
+        return redirect('login') 
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
