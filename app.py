@@ -3,6 +3,13 @@ from flask import Flask, render_template, url_for, request, session, flash, redi
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 from config import *
+from config import db
+from config import bcrypt
+from models import Admin
+from models import User
+from models import Cart
+from models import Order
+from models import Product
 
 
 @app.route('/home')
@@ -39,8 +46,8 @@ def login():
         session.permanent = True
         username = request.form['Name']
         password = request.form['Password']
-        found_user = Users.query.filter_by(user_name=username).first()
-        found_admin = Admins.query.filter_by(admin_name=username).first()
+        found_user = User.query.filter_by(user_name=username).first()
+        found_admin = Admin.query.filter_by(admin_name=username).first()
         if found_user.user_name == username:
             if bcrypt.check_password_hash(found_user.password, password):
                       db.session.commit()
@@ -70,6 +77,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('user','')
+    return redirect('login')
 
 
 @app.route('/cart')
@@ -97,13 +105,14 @@ def signup():
         state = request.form['State']
         zip_code = request.form['Zip']
 
-        pw_hash =  bcrypt.generate_password_hash(Password)
+        pw_hash =  bcrypt.generate_password_hash(password)
 
-        user = Users(user_name=username, user_email=useremail, user_address=address, user_password=pw_hash, user_phonenumber=phonenumber, user_city=city, user_state=state, user_zip=zip_code)
+        user = User(user_name=username, user_email=useremail, user_address=address, user_password=pw_hash, user_phonenumber=phonenumber, user_city=city, user_state=state, user_zip=zip_code)
         db.session.add(user)
         db.session.commit()
 
         session['user'] = username
+        return redirect('home')
 
     else:
         return render_template("signup.html.jinja")
@@ -112,33 +121,20 @@ def signup():
 @app.route('/admin/create')
 def create():
     if request.method == "POST":
-        product_name = request.form['productname']
-        product_price = request.form['productprice']
-        product_brand = request.form['productbrand']
-        stock_status = request.form['stockstatus']
-        product_description = request.form['productdescription']
+        productname = request.form['productname']
+        productprice = request.form['productprice']
+        productbrand = request.form['productbrand']
+        stockstatus = request.form['stockstatus']
+        productdescription = request.form['productdescription']
         product_image = request.file['filename']
 
         try:
-            secured_filename = secure_filename(product_name.filename)
+            secured_filename = secure_filename(product_image.filename)
             product_image.save(secured_filename)
             
-            name = Products(product_name, "")
-            db.session.add(name)
-
-            price = Products(product_price, "")
-            db.session.add(price)
-
-            brand = Products(product_brand, "")
-            db.session.add(brand)
-    
-            db.session.add(secured_filename, "")
-
-            status = Products(stock_status, "")
-            db.session.add(status)
-
-            description = Products(product_description, "")
-            db.session.add(description)
+            product = Product(product_name=productname, product_price=productprice, product_brand=productbrand, product_image=secure_filename, product_description=productdescription, stock_status=stockstatus)
+            db.session.add(product)
+            db.session.commit()
 
             flash("Product created successfully")
             return redirect('admin')
