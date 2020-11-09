@@ -1,43 +1,30 @@
-{% extends "base.html.jinja" %}
-
-{% block title %}
-     Home | E-Com
-{% endblock %} 
-
-{% block head %}
+{% extends "base.html.jinja" %} {% block title %} Home | E-Com {% endblock %} {%
+block head %}
 <link
   rel="stylesheet"
-  href="{{ url_for('static', filename='css/styles.css') }}"
+  href="{{url_for('static', filename='css/styles.css')}}"
 />
-{% endblock %}
-
-{% block body %}
-<div class="text-center font-weight-bold text-monospace h3">
-  {{ content }}
-  <div class="containter p-4 col-md-4 col-sm-12 col-lg-6">
-    <div class="row">
-      <div class="card" style="width: 10rem">
+{% endblock %} {% block body %}
+<div class="container mt-5">
+  <div class="row">
+    {% for x in products %}
+    <div class="col-md-3 p-4">
+      <div class="card" style="width: 15rem; height: 24rem">
         <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQuXdwIkMW0UfKcbVSfgYWnXdlvE7jz2ZPE__4EYt3BYjR2nUK0ftjKX1lO_nlxMQisCDZqKRP6&usqp=CAc"
+          src="static/images/{{product.product_image}}"
+          alt="{{ product.product_name }}"
+          style="height: 12rem"
           class="card-img-top"
-          alt="..."
         />
         <div class="card-body">
-          <p class="text-monospace">I Phone 11</p>
-        </div>
-        <a href="{{url_for('addtocart')}}" class="btn btn-primary">Add to cart</a>
-      </div>
-      <div class="card" style="width: 10rem">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQuXdwIkMW0UfKcbVSfgYWnXdlvE7jz2ZPE__4EYt3BYjR2nUK0ftjKX1lO_nlxMQisCDZqKRP6&usqp=CAc"
-          class="card-img-top"
-          alt="..."
-        />
-        <div class="card-body">
-          <p class="text-monospace">I Phone 11</p>
+          <h5 class="card-title">{{product.product_name}}</h5>
+          <h6 class="card-subtitle">{{product.product_price}}</h6>
+          <p class="card-text">{{product.product_description}}</p>
+          <a href="#" class="btn btn-primary">Add to cart</a>
         </div>
       </div>
     </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

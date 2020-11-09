@@ -16,7 +16,7 @@ from models import Product
 @app.route('/')
 def home():
     if "user" in session:
-        return render_template("index.html.jinja")
+        return render_template("index.html.jinja" product=Product.query.all())
     else:
         flash('You are not logged in')
         return redirect('login')
@@ -28,7 +28,7 @@ def home():
 @app.route('/admin/')
 def admin():
     if "admin" in session:
-        Products=Products.query.all()
+        Products=Product.query.all()
         return render_template("admin.html.jinja", products=Products, image="images/"+Products.product_image)
     else:
         return redirect('login')
@@ -79,9 +79,13 @@ def logout():
     session.pop('user','')
     return redirect('login')
 
+@app.route('/admin/logout')
+def adminLogout():
+    session.pop('admin','')
+    return redirect('login')
 
 @app.route('/cart')
-def addtocart():
+def cart():
     if 'user' in session:
         username = session.get('user')
         cart=Cart.query.filter_by(customer_name=username).all()
