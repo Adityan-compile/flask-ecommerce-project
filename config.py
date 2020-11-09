@@ -19,7 +19,7 @@ app.permanent_session_lifetime = timedelta(days=30)
 
 
 # configuring the database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 
 db = SQLAlchemy(app)
