@@ -6,8 +6,7 @@
 
 <br />
 <p class="h2 text-center text-monospace">Cart</p>
-
-<table class="table">
+<table class="table" style="overflow-y: auto;">
     <thead>
       <tr>
         <th scope="col">S.NO</th>
@@ -16,20 +15,26 @@
         <th scope="col">Price</th>
         <th scope="col">Image</th>
         <th scope="col">Change Quantity</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
-      {% for x in cart %}
+      {% for product in products %}
       <tr>
-        <th scope="row">{{serialnumber}}</th>
-        <td>{{productname}}</td>
-        <td>{{productquantity}}</td>
-        <td>{{productprice}}</td>
-        <td><img src="{{productimage}}"></td>
-        <td><form action="#" method="POST"><input type="number"></form></td>
+        <th scope="row">1</th>
+        <td>{{product.product_name}}</td>
+        <td>4</td>
+        <td>{{product.product_price}}</td>
+        <td><img src="{{url_for('static', filename='images/'+product.product_image)}}" style="width: 50px; height: 50px;"></td>
+        <td><form action="#" method="POST"><input type="number" min="0" max="10"></form></td>
+        <td><a href="#" class="btn btn-danger">Delete</a>
         {% endfor %}
       </tr>
     </tbody>
   </table>
-
+  <div class="info text-center">
+    <label for="total" class="h4">Sub Total:</label>
+<h5 class="total" name="total" id="total">100</h5>
+<a href="#" class="btn btn-primary">Proceed to Checkout</a>
+  </div>
 {% endblock %}
