@@ -101,7 +101,10 @@ def cart():
         username = session.get('user')
         cart=Cart.query.filter_by(customer_name=username).all()
         return render_template("cart.html.jinja", serialnumber=cart.serial_number, productname=cart.product_name, productquantity=cart.product_quantity, productprice=cart.product_price )
-
+    else:
+        products=Cart.query.all()
+        print(products)
+        return render_template('cart.html.jinja', products=products)
 
 @app.route('/checkout' , methods=['POST', 'GET'])
 def checkout():
