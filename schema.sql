@@ -1,5 +1,6 @@
 
-DROP TABLE IF EXISTS Products; 
+DROP TABLE IF EXISTS Products;
+ 
      CREATE TABLE Products(
             id integer PRIMARY KEY AUTOINCREMENT,
             product_name text NOT NULL,
@@ -12,6 +13,7 @@ DROP TABLE IF EXISTS Products;
 
 
 DROP TABLE IF EXISTS Users;
+
      CREATE TABLE Users(
             user_id integer PRIMARY KEY AUTOINCREMENT,
             user_name text NOT NULL,
@@ -26,6 +28,7 @@ DROP TABLE IF EXISTS Users;
 
 
 DROP TABLE IF EXISTS Orders;
+
      CREATE TABLE Orders(
             order_id integer PRIMARY KEY AUTOINCREMENT,
             customer_name text NOT NULL,
@@ -40,6 +43,7 @@ DROP TABLE IF EXISTS Orders;
 
 
 DROP TABLE IF EXISTS Cart;
+
      CREATE TABLE Cart(
             serial_number integer PRIMARY KEY AUTOINCREMENT,
             product_name text NOT NULL,
@@ -50,6 +54,7 @@ DROP TABLE IF EXISTS Cart;
      );
 
 DROP TABLE IF EXISTS Admins;
+
      CREATE TABLE Admins(
             id integer PRIMARY KEY AUTOINCREMENT,
             admin_name text NOT NULL,

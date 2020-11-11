@@ -1,2 +1,35 @@
 {% extends "base.html.jinja" %}
 
+{% block title %} Profile | E-Com {% endblock %}
+
+{% block head %}
+<script src="{{url_for('static', filename='javascript/hidePassword.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+
+<br />
+<p class="h2 text-center text-monospace">Profile</p>
+
+<p class="h4 text-center text-monospace">Name:dsvsfdsdfgvds{{user_name}}</p>
+
+<p class="h4 text-center">Email:sdvfsdvfsdfsd{{user_email}}</p>
+
+<address class="h54 text-center">Address:bedfdbdbd{{user_address}}</address>
+
+<p class="h4 text-center">PhoneNumber:12345678{{user_phonenumber}}</p>
+
+<p class="h4 text-center">City:{{user_city}}</p>
+
+<p class="h4 text-center">State:{{user_state}}</p>
+
+<p class="h4 text-center">ZipCode:{{user_zipcode}}</p>
+
+<p class="h4 text-center">
+    <label for="password">Password:</label> 
+    <input type="password" name="password" id="password" style="pointer-events: none;" value="121212312331{{user_password}}">
+    <button type="submit" class="btn btn-secondary btn-sm" onclick="hide()">Hide/Unhide</button>
+</p>
+
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{
+    "name": "E-Com",
+    "theme_color": "#0275d8",
+    "background_color": "#fff",
+    "icons": [
+        {
+            "src": "static/images/shopping-cart.png",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait"
+}

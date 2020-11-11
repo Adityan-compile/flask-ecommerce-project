@@ -171,6 +171,11 @@ def create():
         return render_template("add-products.html.jinja")
 
 
+@app.route('/test')
+def test():
+    return render_template('profile.html.jinja')
+
+
 @app.errorhandler(404)
 def error(e):
     return render_template("404.html.jinja")
