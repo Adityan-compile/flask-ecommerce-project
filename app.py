@@ -1,10 +1,4 @@
-
-from flask import Flask, render_template, url_for, request, session, flash, redirect
-from flask_sqlalchemy import SQLAlchemy
-from flask import Flask
 from config import *
-from config import db
-from config import bcrypt
 from models import Admin
 from models import User
 from models import Cart
@@ -59,28 +53,27 @@ def login():
         password = request.form['Password']
         found_user = User.query.filter_by(user_name=username).first()
         found_admin = Admin.query.filter_by(admin_name=username).first()
-        if found_user.user_name == username:
+        if found_user is not None and found_user.user_name == username:
             if bcrypt.check_password_hash(found_user.password, password):
-                      db.session.commit()
                       session['user'] = found_user.user_name
                       flash('Login Successful')
                       return redirect('home')
             else:
                 flash('Incorrect username or password')
                 return redirect('login')
-        elif found_admin.admin_name == username:
+        elif found_admin is not None and found_admin.admin_name == username:
             if found_admin.admin_password == password:
                 session['admin'] = username
                 return redirect('admin')
             else:
                 flash('Incorrect username or password')
                 return redirect('login')
-        elif "user" in session:
+        elif 'user' in session:
                 flash('Already Logged in')
                 return redirect('home')
         else:
-            flash('Account not found')
-            return redirect('signup') 
+            flash('Account not found') 
+            return redirect('login')
     else:
         return render_template("login.html.jinja")
 
@@ -102,9 +95,8 @@ def cart():
         cart=Cart.query.filter_by(customer_name=username).all()
         return render_template("cart.html.jinja", serialnumber=cart.serial_number, productname=cart.product_name, productquantity=cart.product_quantity, productprice=cart.product_price )
     else:
-        products=Cart.query.all()
-        print(products)
-        return render_template('cart.html.jinja', products=products)
+        flash('Please Login')
+        return redirect('login')
 
 @app.route('/checkout' , methods=['POST', 'GET'])
 def checkout():
@@ -170,10 +162,6 @@ def create():
     else:
         return render_template("add-products.html.jinja")
 
-
-@app.route('/test')
-def test():
-    return render_template('profile.html.jinja')
 
 
 @app.errorhandler(404)
