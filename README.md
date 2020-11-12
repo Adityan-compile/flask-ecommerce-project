@@ -9,7 +9,7 @@
 #### Features:
 + Admin Dashboard
 + User Profile
-+ Payment Gateway integration.
++ Payment Gateway integration (Yet to be done).
 + Monolithic Architecture
 + Easy maintenance
 
