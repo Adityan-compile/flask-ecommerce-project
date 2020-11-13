@@ -41,26 +41,16 @@
         </div>
       </nav>
 
+          {% with messages = get_flashed_messages() %} 
+            {% if messages %} 
+                  {% for msg in messages %}
+                         <p class="h5">{{ msg }}</p>
+                  {% endfor %} 
+            {% endif %}
+          {% endwith %}
+
     {% block content %}
      {% endblock %}
-
-     <footer class=" footer fixed-bottom page-footer sticky-bottom card-footer">
-      <div class="text-center container-fluid ">
-        <small>
-        Title icon made by
-        <a
-          href="https://www.flaticon.com/authors/gregor-cresnar"
-          title="Gregor Cresnar"
-          >Gregor Cresnar</a
-        >
-        from
-        <a href="https://www.flaticon.com/" title="Flaticon"
-          >www.flaticon.com</a
-        >
-        </small>
-      </div>
-    </footer>
-
     
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

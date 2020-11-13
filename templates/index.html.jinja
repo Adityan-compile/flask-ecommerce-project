@@ -4,12 +4,17 @@ block head %}
   rel="stylesheet"
   href="{{url_for('static', filename='css/styles.css')}}"
 />
-{% endblock %} {% block body %}
+
+<script src="{{url_for('static', filename='javascript/stock.js')}}"></script>
+
+{% endblock %} 
+
+{% block body %}
 <div class="container mt-5">
   <div class="row">
-    {% for x in products %}
+    {% for product in products %}
     <div class="col-md-3 p-4">
-      <div class="card" style="width: 15rem; height: 24rem">
+      <div class="card" style="width: 15rem; height: 24rem" onload="stock()">
         <img
           src="static/images/{{product.product_image}}"
           alt="{{ product.product_name }}"
@@ -20,7 +25,8 @@ block head %}
           <h5 class="card-title">{{product.product_name}}</h5>
           <h6 class="card-subtitle">{{product.product_price}}</h6>
           <p class="card-text">{{product.product_description}}</p>
-          <a href="#" class="btn btn-primary">Add to cart</a>
+          <small class="card-text" id="stockstatus">{{product.stock_status}}</small>
+          <a href="#" class="btn btn-primary" aria-disabled="false">Add to cart</a>
         </div>
       </div>
     </div>
