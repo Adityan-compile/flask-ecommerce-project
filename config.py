@@ -1,3 +1,6 @@
+
+#!/env/bin/python3
+
 import os
 from datetime import timedelta
 from flask import Flask, flash, redirect, render_template, request, session, url_for
@@ -22,5 +25,5 @@ app.permanent_session_lifetime = timedelta(days=30)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 
-db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
+db = SQLAlchemy(app)      #initialize db
+bcrypt = Bcrypt(app)      #initialize bcrypt

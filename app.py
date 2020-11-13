@@ -1,3 +1,5 @@
+#!env/bin/python3
+
 from config import *
 from models import Admin
 from models import User
@@ -54,7 +56,7 @@ def login():
         found_user = User.query.filter_by(user_name=username).first()
         found_admin = Admin.query.filter_by(admin_name=username).first()
         if found_user is not None and found_user.user_name == username:
-            if bcrypt.check_password_hash(found_user.password, password):
+            if bcrypt.check_password_hash(found_user.user_password, password):
                       session['user'] = found_user.user_name
                       flash('Login Successful')
                       return redirect('home')
