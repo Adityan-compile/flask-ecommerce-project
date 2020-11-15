@@ -7,6 +7,7 @@ from flask import Flask, flash, redirect, render_template, request, session, url
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt
+from  sqlalchemy.sql.expression import func
 
 app = Flask(__name__)
 
