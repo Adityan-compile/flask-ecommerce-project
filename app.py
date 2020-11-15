@@ -13,7 +13,7 @@ from models import Product
 @app.route('/')
 def home():
     if "user" in session:
-        return render_template("index.html.jinja", products=Product.query.all())
+        return render_template("index.html.jinja", products=Product.query.order_by(func.random).all())
     else:
         flash('You are not logged in')
         return redirect(url_for('login'))
