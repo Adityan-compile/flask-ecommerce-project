@@ -65,7 +65,7 @@
         {% with messages = get_flashed_messages() %} 
             {% if messages %} 
                   {% for msg in messages %}
-                         <p class="h5">{{ msg }}</p>
+                         <p class="text text-monospace">{{ msg }}</p>
                   {% endfor %} 
             {% endif %}
         {% endwith %}

@@ -11,10 +11,10 @@
     "editor.acceptSuggestionOnEnter": "off"
   },
   "[html]": {
-    "editor.suggest.insertMode": "replace",
-    "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'"
+    "editor.suggest.insertMode": "replace"
   },
   "python.pythonPath": "env/bin/python3",
   "python.analysis.disabled": ["unresolved-import", "undefined-variable"],
-  "workbench.colorTheme": "Atom One Dark"
+  "workbench.colorTheme": "Atom One Dark",
+  "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'"
 }
