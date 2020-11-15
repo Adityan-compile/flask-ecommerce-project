@@ -10,26 +10,32 @@
 
 <br />
 <p class="h2 text-center text-monospace">Profile</p>
+<br />
 
-<p class="h4 text-center text-monospace">Name:dsvsfdsdfgvds{{info.user_name}}</p>
+<div class="row">
+<div class="col-md-8 offset-md-2">
 
-<p class="h4 text-center">Email:sdvfsdvfsdfsd{{info.user_email}}</p>
+<p class="h4 text-monospace">Name: {{info.user_name}}</p>
 
-<address class="h54 text-center">Address:bedfdbdbd{{info.user_address}}</address>
+<p class="h4 text-monospace">Email: {{info.user_email}}</p>
 
-<p class="h4 text-center">PhoneNumber:12345678{{info.user_phonenumber}}</p>
+<address class="h4 text-monospace">Address: {{info.user_address}}</address>
 
-<p class="h4 text-center">City:{{info.user_city}}</p>
+<p class="h4 text-monospace">City: {{info.user_city}}</p>
 
-<p class="h4 text-center">State:{{info.user_state}}</p>
+<p class="h4 text-monospace">State: {{info.user_state}}</p>
 
-<p class="h4 text-center">ZipCode:{{info.user_zipcode}}</p>
+<p class="h4 text-monospace">ZipCode: {{info.user_zipcode}}</p>
 
-<p class="h4 text-center">
-    <label for="password">Password:</label> 
+<p class="h4 text-monospace">PhoneNumber: {{info.user_phonenumber}}</p>
+
+<p class="h4 text-monospace">
+    <label for="password">Password: </label> 
     <input type="password" name="password" id="password" style="pointer-events: none;" value="{{info.user_password}}">
     <button type="submit" class="btn btn-secondary btn-sm" onclick="hide()">Hide/Unhide</button>
 </p>
 
+</div>
+</div>
 
 {% endblock %}

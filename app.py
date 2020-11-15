@@ -1,4 +1,5 @@
-#!env/bin/python3
+#!/env/bin/python3
+# coding: utf-8
 
 from config import *
 from models import Admin
@@ -24,10 +25,10 @@ def home():
 @app.route('/admin/')
 def admin():
     if "admin" in session:
-        Products=Product.query.all()
+        Products = Product.query.all()
         return render_template("admin.html.jinja", products=Products, image="images/"+Products.product_image)
     else:
-        return redirect(url_for('login'))
+        return redirect(url_for('adminLogin'))
 
 
 @app.route('/admin/delete')
@@ -39,8 +40,8 @@ def admintasks():
 @app.route('/profile')
 def profile():
     if 'user' in session:
-        username=session.get('user')
-        user= User.query.filter_by(user_name=username).first()
+        username = session.get('user')
+        user = User.query.filter_by(user_name=username).first()
         return render_template('profile.html.jinja', info=user)
     else:
         flash('Please Login')
@@ -49,69 +50,89 @@ def profile():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    if request.method == "POST":
+   if 'user'in session:
+       flash('Already logged in')
+       return redirect(url_for('home'))
+   elif request.method == "POST":
         session.permanent = True
         username = request.form['Name']
         password = request.form['Password']
         found_user = User.query.filter_by(user_name=username).first()
-        found_admin = Admin.query.filter_by(admin_name=username).first()
-        print(found_admin)
         if found_user is not None and found_user.user_name == username:
             if bcrypt.check_password_hash(found_user.user_password, password):
-                      session['user'] = found_user.user_name
-                      flash('Login Successful')
-                      return redirect(url_for('home'))
+                session['user'] = found_user.user_name
+                flash('Login Successful')
+                return redirect(url_for('home'))
             else:
                 flash('Incorrect username or password')
                 return redirect(url_for('login'))
-        elif found_admin is not None and found_admin.admin_name == username:
+        else:
+            flash('Incorrect username or password')
+            return redirect(url_for('login'))
+   else:
+        return redirect(url_for('home'))
+
+
+@app.route('/admin/login', methods=['POST', 'GET'])
+def adminLogin():
+    if 'admin' in session:
+        flash('Already logged in')
+        return redirect(url_for('admin'))
+    
+    if request.method == 'POST':
+        session.permanent = True
+        username = request.form['Name']
+        password = request.form['Password']
+        found_admin = Admin.query.filter_by(admin_name=username).first()
+        if found_admin is not None and found_admin.admin_name == username:
             if found_admin.admin_password == password:
                 session['admin'] = username
+                flash('Login Successful')
                 return redirect(url_for('admin'))
             else:
                 flash('Incorrect username or password')
-                return redirect(url_for('login'))
-        elif 'user' in session:
-                flash('Already Logged in')
-                return redirect('home')
+                return redirect(url_for('adminLogin'))
         else:
-            flash('Account not found') 
-            return redirect(url_for('login'))
-    else:
-        return render_template("login.html.jinja")
+            flash('Incorrect username or password')
+            return redirect(url_for('Incorrect username or password'))
 
 
 @app.route('/logout')
 def logout():
-    session.pop('user','')
+    session.pop('user', '')
     return redirect(url_for('login'))
+
 
 @app.route('/admin/logout')
 def adminLogout():
-    session.pop('admin','')
-    return redirect(url_for('login'))
+    session.pop('admin', '')
+    return redirect(url_for('adminLogin'))
+
 
 @app.route('/cart')
 def cart():
     if 'user' in session:
         username = session.get('user')
-        cart=Cart.query.filter_by(customer_name=username).all()
-        return render_template("cart.html.jinja", serialnumber=cart.serial_number, productname=cart.product_name, productquantity=cart.product_quantity, productprice=cart.product_price )
+        cart = Cart.query.filter_by(customer_name=username).all()
+        return render_template("cart.html.jinja", serialnumber=cart.serial_number, productname=cart.product_name, productquantity=cart.product_quantity, productprice=cart.product_price)
     else:
         flash('Please Login')
         return redirect(url_for('login'))
 
-@app.route('/checkout' , methods=['POST', 'GET'])
+
+@app.route('/checkout', methods=['POST', 'GET'])
 def checkout():
     if 'user' in session:
         if request.method == 'GET':
-             return render_template('checkout.html.jinja')
+            return render_template('checkout.html.jinja')
         else:
-            username=session.get('user')
-            user=User.query.filter_by(user_name=username).first()
-            order = Order(customer_name=user.user_name, customer_address=user.user_address, customer_city=user.user_city, customer_state=user.user_state, customer_phone=user.user_phonenumber, customer_zip=user.user_zip)
+            username = session.get('user')
+            user = User.query.filter_by(user_name=username).first()
+            order = Order(customer_name=user.user_name, customer_address=user.user_address, customer_city=user.user_city,
+                          customer_state=user.user_state, customer_phone=user.user_phonenumber, customer_zip=user.user_zip)
     else:
-        return redirect(url_for('login')) 
+        return redirect(url_for('login'))
+
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
@@ -125,9 +146,10 @@ def signup():
         state = request.form['State']
         zip_code = request.form['Zip']
 
-        pw_hash =  bcrypt.generate_password_hash(password)
+        pw_hash = bcrypt.generate_password_hash(password)
 
-        user = User(user_name=username, user_email=useremail, user_address=address, user_password=pw_hash, user_phonenumber=phonenumber, user_city=city, user_state=state, user_zip=zip_code)
+        user = User(user_name=username, user_email=useremail, user_address=address, user_password=pw_hash,
+                    user_phonenumber=phonenumber, user_city=city, user_state=state, user_zip=zip_code)
         db.session.add(user)
         db.session.commit()
 
@@ -151,8 +173,9 @@ def create():
         try:
             secured_filename = secure_filename(product_image.filename)
             product_image.save(secured_filename)
-            
-            product = Product(product_name=productname, product_price=productprice, product_brand=productbrand, product_image=secure_filename, product_description=productdescription, stock_status=stockstatus)
+
+            product = Product(product_name=productname, product_price=productprice, product_brand=productbrand,
+                              product_image=secure_filename, product_description=productdescription, stock_status=stockstatus)
             db.session.add(product)
             db.session.commit()
 
@@ -160,11 +183,10 @@ def create():
             return redirect(url_for('admin'))
         except:
             flash("Error creating product")
-            return redirect(url_for('admin'))    
+            return redirect(url_for('admin'))
 
     else:
         return render_template("add-products.html.jinja")
-
 
 
 @app.errorhandler(404)
