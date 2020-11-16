@@ -3,7 +3,7 @@
 
 import os
 from datetime import timedelta
-from flask import Flask, flash, redirect, render_template, request, session, url_for
+from flask import Flask, flash, redirect, render_template, request, session, url_for, Blueprint
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt
