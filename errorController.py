@@ -15,3 +15,11 @@ def error404(e):
 def error403(e):
     message = "Looks like you are trying to look into our little secret"
     return render_template('error.html.jinja', err='403 Forbidden', msg=message), 403
+
+
+@errorController.errorhandler(500)
+def error500(e):
+    message = "Uh,Oh our servers encountered an error"
+    return render_template('error.html.jinja', err="500 Internal Server Error", msg=message), 500
+
+
