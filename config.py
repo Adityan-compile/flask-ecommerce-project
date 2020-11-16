@@ -15,10 +15,10 @@ app = Flask(__name__)
 UPLOAD_FOLDER = 'static/images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
+
 
 # configuring session storage
-app.secret_key = "fc1dj4ad6s47dep932089rjdnc+_{EF37W998VW798DeqVDrewASewC+};:}WE{V}]D_WS_O!_+"
+app.config['SECRET_KEY'] = 'random String'
 app.permanent_session_lifetime = timedelta(days=30)
 
 

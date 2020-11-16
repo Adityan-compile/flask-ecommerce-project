@@ -17,7 +17,7 @@ def home():
         return render_template("index.html.jinja", products=Product.query.order_by(func.random()).all())
     else:
         flash('You are not logged in')
-        return redirect('login')
+        return redirect(url_for('userController.login'))
 
 
 @userController.route('/profile')
@@ -28,7 +28,7 @@ def profile():
         return render_template('profile.html.jinja', info=user)
     else:
         flash('Please Login')
-        return redirect('login')
+        return redirect(url_for('userController.login'))
 
 
 @userController.route('/login', methods=['POST', 'GET'])
@@ -46,13 +46,13 @@ def login():
              if bcrypt.check_password_hash(found_user.user_password, password):
                   session['user'] = found_user.user_name
                   flash('Login Successful')
-                  return redirect('home')
+                  return redirect(url_for('userController.home'))
              else:
                  flash('Incorrect username or password')
-                 return redirect('login')
+                 return redirect(url_for('userController.login'))
           else:
               flash('Incorrect username or password')
-              return redirect('login')
+              return redirect(url_for('userController.login'))
   else:
       return render_template('login.html.jinja')
 
@@ -60,7 +60,7 @@ def login():
 @userController.route('/logout')
 def logout():
     session.pop('user', '')
-    return redirect('login')
+    return redirect(url_for('userController.login'))
 
 
 
@@ -72,7 +72,7 @@ def cart():
         return render_template("cart.html.jinja", serialnumber=cart.serial_number, productname=cart.product_name, productquantity=cart.product_quantity, productprice=cart.product_price)
     else:
         flash('Please Login')
-        return redirect('login')
+        return redirect(url_for('userController.login'))
 
 
 @userController.route('/checkout', methods=['POST', 'GET'])
@@ -86,7 +86,7 @@ def checkout():
             order = Order(customer_name=user.user_name, customer_address=user.user_address, customer_city=user.user_city,
                           customer_state=user.user_state, customer_phone=user.user_phonenumber, customer_zip=user.user_zip)
     else:
-        return redirect('login')
+        return redirect(url_for('userController.login'))
 
 
 @userController.route('/signup', methods=['POST', 'GET'])
@@ -109,9 +109,9 @@ def signup():
         db.session.commit()
 
         session['user'] = username
-        return redirect('home')
+        return redirect(url_for('userController.home'))
 
     else:
-        return render_template("signup.html.jinja")
+        return render_template(url_for('signup.html.jinja'))
 
 

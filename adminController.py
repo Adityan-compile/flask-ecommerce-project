@@ -20,7 +20,7 @@ def admin():
         Products = Product.query.all()
         return render_template("admin.html.jinja", products=Products, image="images/"+Products.product_image)
     else:
-        return redirect('adminLogin')
+        return redirect(url_for('adminController.adminLogin'))
 
 
 @adminController.route('/admin/delete')
@@ -33,7 +33,7 @@ def admintasks():
 def adminLogin():
     if 'admin' in session:
         flash('Already logged in')
-        return redirect('admin')
+        return redirect(url_for('adminController.adminLogin'))
     
     if request.method == 'POST':
         session.permanent = True
@@ -44,13 +44,13 @@ def adminLogin():
             if found_admin.admin_password == password:
                 session['admin'] = username
                 flash('Login Successful')
-                return redirect('admin')
+                return redirect(url_for('adminController.admin'))
             else:
                 flash('Incorrect username or password')
-                return redirect('adminLogin')
+                return redirect(url_for('adminController.adminLogin'))
         else:
             flash('Incorrect username or password')
-            return redirect('adminLogin')
+            return redirect(url_for('adminController.adminLogin'))
     else:
         return render_template('admin-login.html.jinja')
 
@@ -58,7 +58,7 @@ def adminLogin():
 @adminController.route('/admin/logout')
 def adminLogout():
     session.pop('admin', '')
-    return redirect('adminLogin')
+    return redirect(url_for('adminController.adminLogin'))
 
 
 
@@ -82,10 +82,10 @@ def create():
             db.session.commit()
 
             flash("Product created successfully")
-            return redirect('admin')
+            return redirect(url_for('adminController.admin'))
         except:
             flash("Error creating product")
-            return redirect('admin')
+            return redirect(url_for('adminController.admin'))
 
     else:
         return render_template("add-products.html.jinja")
