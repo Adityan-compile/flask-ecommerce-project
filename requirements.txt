@@ -125,7 +125,7 @@ python-keystoneclient==3.15.0
 python-swiftclient==3.5.0
 pytz==2018.3
 pyxdg==0.25
-PyYAML==3.12
+PyYAML==5.1
 razorpay==1.2.0
 reportlab==3.4.0
 requests==2.18.4
