@@ -23,3 +23,7 @@ def error500(e):
     return render_template('error.html.jinja', err="500 Internal Server Error", msg=message), 500
 
 
+@errorController.errorhandler(413)
+def error413(e):
+    message = "Whoop's look's like you are way too heavy"
+    return render_template('error.html.jinja', err='413 Payload too large', msg=message)

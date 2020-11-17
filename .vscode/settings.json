@@ -13,7 +13,7 @@
   "[html]": {
     "editor.suggest.insertMode": "replace"
   },
-  "python.pythonPath": "env/bin/python3",
+  "python.pythonPath": "env/bin/python",
   "python.analysis.disabled": ["unresolved-import", "undefined-variable"],
   "workbench.colorTheme": "Atom One Dark",
   "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'"
