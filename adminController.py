@@ -89,3 +89,18 @@ def create():
 
     else:
         return render_template("add-products.html.jinja")
+
+
+@adminController.route('/admin/delete', methods=['POST'])
+def deleteProduct():
+    productName = request.form['productName']
+    found_product = Product.query.filter_by(product_name=productName).first()
+
+    if found_product is not None:
+        db.session.delete(found_product)
+        db.session.commit()
+        flash('Product Deleted successfully')
+        return redirect(url_for('adminController.admin'))
+    else:
+        flash('The product does not exist')
+        return redirect(url_for('adminController.admin'))
