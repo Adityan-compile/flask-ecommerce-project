@@ -73,16 +73,26 @@ def create():
         product_image = request.file['filename']
 
         try:
-            secured_filename = secure_filename(product_image.filename)
-            product_image.save(secured_filename)
+            if product_image.filename != '':
+                file_ext = os.path.splitext(product_image.filename) [1]
+                if file_ext not in current_app.config['ALLOWED_EXTENSIONS']:
+                    flash('File extension not supported')
+                    return redirect(url_for('adminController.create'))
+                else:
+                    secured_filename = secure_filename(product_image.filename)
+                    product_image.save(os.path.join(app.config['UPLOAD_FOLDER'], secured_filename))
 
-            product = Product(product_name=productname, product_price=productprice, product_brand=productbrand,
-                              product_image=secure_filename, product_description=productdescription, stock_status=stockstatus)
-            db.session.add(product)
-            db.session.commit()
+                    product = Product(product_name=productname, product_price=productprice, product_brand=productbrand,
+                                      product_image=secure_filename, product_description=productdescription, stock_status=stockstatus)
+                    db.session.add(product)
+                    db.session.commit()
 
-            flash("Product created successfully")
-            return redirect(url_for('adminController.admin'))
+                    flash("Product created successfully")
+                    return redirect(url_for('adminController.admin'))
+            else:
+                flash('Please use a valid filename')
+                return redirect(url_for('adminController.create'))
+            
         except:
             flash("Error creating product")
             return redirect(url_for('adminController.admin'))
