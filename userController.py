@@ -36,7 +36,7 @@ def login():
   if request.method == "POST":
      if 'user'in session:
          flash('Already logged in')
-         return redirect('home')
+         return redirect(url_for('home'))
      elif request.method == "POST":
           session.permanent = True
           username = request.form['Name']
@@ -60,6 +60,7 @@ def login():
 @userController.route('/logout')
 def logout():
     session.pop('user', '')
+    flash('Logged out successfully')
     return redirect(url_for('userController.login'))
 
 

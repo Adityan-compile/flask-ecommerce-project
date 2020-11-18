@@ -20,9 +20,6 @@ UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER')
 ALLOWED_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif']
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# configuring maximum request body size
-app.config['MAX_CONTENT_LENGTH']=os.getenv('MAX_CONTENT_LENGTH')
-
 
 # configuring session storage
 app.config['SECRET_KEY'] = os.getenv('ECOM_SECRET_KEY')

@@ -5,7 +5,7 @@ from config import *
 
 errorController = Blueprint('errorController', __name__)
 
-@app.errorhandler(404)
+@errorController.errorhandler(404)
 def error404(e):
     message = "OOPS look's like you are lost"
     return render_template("error.html.jinja", err="404 Not Found!!", msg=message), 404
@@ -27,3 +27,9 @@ def error500(e):
 def error413(e):
     message = "Whoop's look's like you are way too heavy"
     return render_template('error.html.jinja', err='413 Payload too large', msg=message)
+
+
+@errorController.errorhandler(409)
+def error409(e):
+    message = "Uh,Oh We are unable to handle your request, hang tight"
+    return render_template('error.html.jinja', err="409 COnflict", msg=message)
