@@ -19,23 +19,23 @@
   <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{{url_for('admin')}}">E-Com</a>
+        <a class="navbar-brand" href="{{url_for('adminController.admin')}}">E-Com</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="{{url_for('admin')}}">Products<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="{{url_for('adminController.admin')}}">Products<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="{{url_for('admin')}}">Users</a>
+              <a class="nav-link" href="{{url_for('adminController.admin')}}">Users</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="{{url_for('admin')}}">Add Products</a>
+              <a class="nav-link" href="{{url_for('adminController.create')}}">Add Products</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="{{url_for('admin')}}" aria-disabled="false">Orders</a>
+              <a class="nav-link" href="{{url_for('adminController.admin')}}" aria-disabled="false">Orders</a>
             </li>
           </ul>
         </div>

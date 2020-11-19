@@ -8,9 +8,9 @@ from errorController import errorController
 
 
 # registering blueprints for admin and user controllers
+app.register_blueprint(errorController)
 app.register_blueprint(userController)
 app.register_blueprint(adminController)
-app.register_blueprint(errorController)
 
 
 if '__name__' == '__main__':

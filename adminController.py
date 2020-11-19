@@ -8,7 +8,8 @@ from models import User
 from models import Order
 
 # creating an object for admin-controller
-adminController = Blueprint('adminController', __name__, template_folder="templates", static_folder="static")
+adminController = Blueprint('adminController', __name__,
+                            template_folder="templates", static_folder="static")
 
 
 @adminController.route('/admin')
@@ -18,12 +19,11 @@ adminController = Blueprint('adminController', __name__, template_folder="templa
 def admin():
     if "admin" in session:
         Products = Product.query.all()
-        return render_template("admin.html.jinja", products=Products, image="images/"+Products.product_image)
+        return render_template('admin.html.jinja', products=Products)
     else:
         return redirect(url_for('adminController.adminLogin'))
 
 
-@adminController.route('/admin/delete')
 @adminController.route('/admin/edit')
 def admintasks():
     return render_template('admin.html.jinja')
@@ -31,28 +31,29 @@ def admintasks():
 
 @adminController.route('/admin/login', methods=['POST', 'GET'])
 def adminLogin():
-    if 'admin' in session:
-        flash('Already logged in')
-        return redirect(url_for('adminController.adminLogin'))
-    
-    if request.method == 'POST':
-        session.permanent = True
-        username = request.form['Name']
-        password = request.form['Password']
-        found_admin = Admin.query.filter_by(admin_name=username).first()
-        if found_admin is not None and found_admin.admin_name == username:
-            if found_admin.admin_password == password:
-                session['admin'] = username
-                flash('Login Successful')
-                return redirect(url_for('adminController.admin'))
-            else:
-                flash('Incorrect username or password')
-                return redirect(url_for('adminController.adminLogin'))
-        else:
-            flash('Incorrect username or password')
-            return redirect(url_for('adminController.adminLogin'))
-    else:
-        return render_template('admin-login.html.jinja')
+  if request.method == "POST":
+         if 'admin' in session:
+             flash('Already Logged in')
+             return redirect(url_for('adminController.admin'))
+         elif request.method == "POST":
+             session.permanent = True
+             username = request.form['Name']
+             password = request.form['Password']
+             found_admin = Admin.query.filter_by(admin_name=username).first()
+
+             if found_admin is not None and found_admin.admin_name == username:
+                if bcrypt.check_password_hash(found_admin.admin_password, password):
+                    session['admin'] = found_admin.admin_name
+                    flash('Login Successful')
+                    return redirect(url_for('adminController.admin'))
+                else:
+                   flash('Incorrect username or password')
+                   return redirect(url_for('adminController.adminLogin'))
+             else:
+                 flash('Incorrect username or password')
+                 return redirect(url_for('adminController.adminLogin'))
+  else:
+      return render_template('admin-login.html.jinja')
 
 
 @adminController.route('/admin/logout')
