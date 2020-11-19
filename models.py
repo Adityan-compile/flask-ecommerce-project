@@ -15,7 +15,7 @@ class Admin(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     admin_name = db.Column(db.Text, nullable=False)
-    admin_password = db.Column(db.Text, nullable=False)
+    admin_password = db.Column(db.Text(100), nullable=False)
 
 
 class Cart(db.Model):

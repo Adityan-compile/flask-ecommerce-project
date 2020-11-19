@@ -10,10 +10,13 @@ from flask_bcrypt import Bcrypt
 from  sqlalchemy.sql.expression import func
 from dotenv import load_dotenv
 
+
 # Loading environment variables
 load_dotenv()
 
+
 app = Flask(__name__)
+
 
 # configuring file uploads
 UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER')
@@ -29,6 +32,7 @@ app.permanent_session_lifetime = timedelta(days=30)
 # configuring the database
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_PATH')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
+
 
 db = SQLAlchemy(app)      #initialize db
 bcrypt = Bcrypt(app)      #initialize bcrypt

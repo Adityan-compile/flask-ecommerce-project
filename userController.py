@@ -102,7 +102,7 @@ def signup():
         state = request.form['State']
         zip_code = request.form['Zip']
 
-        pw_hash = bcrypt.generate_password_hash(password)
+        pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
 
         user = User(user_name=username, user_email=useremail, user_address=address, user_password=pw_hash,
                     user_phonenumber=phonenumber, user_city=city, user_state=state, user_zip=zip_code)
@@ -113,6 +113,6 @@ def signup():
         return redirect(url_for('userController.home'))
 
     else:
-        return render_template(url_for('signup.html.jinja'))
+        return render_template('signup.html.jinja')
 
 

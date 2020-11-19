@@ -32,10 +32,10 @@ Dashboard
       <td>{{product.product_price}}</td>
       <td><img src="static/images/{{product.product_image}}" height="50px" width="50px"></td>
      <td>
-       <form action="{{url_for('editProduct')}}" method="post">
+       <form action="{{url_for('adminController.admintasks')}}" method="post">
            <a href="" type="submit" class="btn btn-primary">Edit</a>
        </form>
-       <form action="{{url_for(deleteProduct)}}" method="POST">
+       <form action="{{url_for('adminController.deleteProduct')}}" method="POST">
       <a href="" type="submit" class="btn btn-danger" >Delete</a>
       <input type="hidden" name="productName" value="{{product.product_name}}">
       </form>
