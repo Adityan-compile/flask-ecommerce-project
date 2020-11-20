@@ -25,7 +25,7 @@ def admin():
 
 
 @adminController.route('/admin/edit')
-def admintasks():
+def editProduct():
     return render_template('admin.html.jinja')
 
 
@@ -63,55 +63,55 @@ def adminLogout():
 
 
 
-@adminController.route('/admin/create')
+@adminController.route('/admin/products/create', methods=['POST', 'GET'])
 def create():
     if request.method == "POST":
         productname = request.form['productname']
         productprice = request.form['productprice']
         productbrand = request.form['productbrand']
         stockstatus = request.form['stockstatus']
-        productdescription = request.form['productdescription']
-        product_image = request.file['filename']
-
+        productdescription = request.form['productDescription']
+        file = request.files['filename']
+        
         try:
-            if product_image.filename != '':
-                file_ext = os.path.splitext(product_image.filename) [1]
-                if file_ext not in current_app.config['ALLOWED_EXTENSIONS']:
-                    flash('File extension not supported')
-                    return redirect(url_for('adminController.create'))
-                else:
-                    secured_filename = secure_filename(product_image.filename)
-                    product_image.save(os.path.join(app.config['UPLOAD_FOLDER'], secured_filename))
+            if file.filename != '':
+                    secured_filename = secure_filename(file.filename)
+
+                    file.save(os.path.join(app.config['UPLOAD_FOLDER'], secured_filename))
 
                     product = Product(product_name=productname, product_price=productprice, product_brand=productbrand,
-                                      product_image=secure_filename, product_description=productdescription, stock_status=stockstatus)
+                                      product_image=secured_filename, product_description=productdescription, stock_status=stockstatus)
                     db.session.add(product)
                     db.session.commit()
 
                     flash("Product created successfully")
                     return redirect(url_for('adminController.admin'))
             else:
-                flash('Please use a valid filename')
+                flash('No file selected')
                 return redirect(url_for('adminController.create'))
             
         except:
             flash("Error creating product")
-            return redirect(url_for('adminController.admin'))
+            return redirect(url_for('adminController.create'))
 
     else:
         return render_template("add-products.html.jinja")
 
 
-@adminController.route('/admin/delete', methods=['POST'])
-def deleteProduct():
-    productName = request.form['productName']
-    found_product = Product.query.filter_by(product_name=productName).first()
+@adminController.route('/admin/products/delete/<productname>', methods=['POST', 'GET'])
+def deleteProduct(productname):
+    if request.method == 'POST' or productname: 
+        productName = productname
+        found_product = Product.query.filter_by(product_name=productName).first()
+        filename = found_product.product_image
 
-    if found_product is not None:
-        db.session.delete(found_product)
-        db.session.commit()
-        flash('Product Deleted successfully')
-        return redirect(url_for('adminController.admin'))
-    else:
-        flash('The product does not exist')
-        return redirect(url_for('adminController.admin'))
+        if found_product is not None:
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            db.session.delete(found_product)
+            db.session.commit()
+            flash('Product Deleted successfully')
+            return redirect(url_for('adminController.admin'))
+        else:
+            flash('The product does not exist')
+            return redirect(url_for('adminController.admin'))
+            

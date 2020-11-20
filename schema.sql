@@ -34,11 +34,10 @@ DROP TABLE IF EXISTS Orders;
             customer_name text NOT NULL,
             customer_email text NOT NULL,
             customer_address text NOT NULL,
-            customer_city text NOT NULL,
-            customer_state text NOT NULL,
             customer_zip text NOT NULL,
             customer_phone text NOT NULL,
             payment_status text NOT NULL,
+            product_name text NOT NULL,
             total_order_price text NOT NULL
      );
 

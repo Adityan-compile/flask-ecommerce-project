@@ -2,34 +2,36 @@
 
 
 {% block title %}
-Dashboard
+All Orders
 {% endblock %}
 
 {% block content %}
 
 <br />
-<h2 class="heading text-center text-monospace">Products</h2>
+<h2 class="heading text-center text-monospace">Orders</h2>
 <br />
 
 <div class="table-responsive">
 <table class="table mx-auto">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">S.NO</th>
+      <th scope="col">ORDER ID</th>
       <th scope="col">PRODUCT NAME</th>
-      <th scope="col">PRODUCT ID</th>
-      <th scope="col">PRODUCT PRICE</th>
-      <th scope="col">PRODUCT IMAGE</th>
-      <th scope="col">EDIT/DELETE PRODUCT</th>
+      <th scope="col">CUSTOMER NAME</th>
+      <th scope="col">ADDRESS</th>
+      <th scope="col">EMAIL</th>
+      <th scope="col">PAYMENT</th>
+      <th scope="col">TOTAL PRICE</th>
     </tr>
   </thead>
   <tbody>
-    {% for product in products %}
+    {% for order in orders %}
     <tr>
-      <th scope="row">{{product.serial_number}}</th>
-      <td>{{product.product_name}}</td>
-      <td>{{product.product_id}}</td>
-      <td>{{product.product_price}}</td>
+      <th scope="row">{{order.order_id}}</th>
+      <td>{{order.product_name}}</td>
+      <td>{{order.cudtomer_name}}</td>
+      <td>{{order.customer_email}}</td>
+
       <td><img src="static/images/{{product.product_image}}" height="50px" width="50px"></td>
      <td>
       <a href="{{url_for('adminController.editProduct')}}" type="submit" class="btn btn-primary">Edit</a>

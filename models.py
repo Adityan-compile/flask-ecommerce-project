@@ -36,11 +36,10 @@ class Order(db.Model):
     customer_name = db.Column(db.Text, nullable=False)
     customer_email = db.Column(db.Text, nullable=False)
     customer_address = db.Column(db.Text, nullable=False)
-    customer_city = db.Column(db.Text, nullable=False)
-    customer_state = db.Column(db.Text, nullable=False)
     customer_zip = db.Column(db.Text, nullable=False)
     customer_phone = db.Column(db.Text, nullable=False)
     payment_status = db.Column(db.Text, nullable=False)
+    product_name = db.Column(db.Text, nullable=False)
     total_order_price = db.Column(db.Text, nullable=False)
 
 
