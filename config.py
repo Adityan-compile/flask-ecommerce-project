@@ -9,20 +9,19 @@ from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt
 from  sqlalchemy.sql.expression import func
 from dotenv import load_dotenv
+from dotenv import find_dotenv
 
 
 # Loading environment variables
-load_dotenv()
+load_dotenv(find_dotenv())
 
 
 app = Flask(__name__)
 
 
 # configuring file uploads
-UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER')
-ALLOWED_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif']
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
+ALLOWED_EXTENSIONS = ['.png', '.jpg', '.jpeg']
+app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER')
 
 # configuring session storage
 app.config['SECRET_KEY'] = os.getenv('ECOM_SECRET_KEY')
