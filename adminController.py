@@ -8,8 +8,7 @@ from models import User
 from models import Order
 
 # creating an object for admin-controller
-adminController = Blueprint('adminController', __name__,
-                            template_folder="templates", static_folder="static")
+adminController = Blueprint('adminController', __name__, template_folder="templates", static_folder="static")
 
 
 @adminController.route('/admin')
