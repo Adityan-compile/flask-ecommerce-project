@@ -26,7 +26,7 @@ block head %}
           <h6 class="card-subtitle">{{product.product_price}}</h6>
           <p class="card-text">{{product.product_description}}</p>
           <small class="card-text" id="stockstatus">{{product.stock_status}}</small>
-          <a href="#" class="btn btn-primary" aria-disabled="false">Add to cart</a>
+          <a href="{{url_for('addtocart', productName=product.product_name)}}" class="btn btn-primary">Add to cart</a>
         </div>
       </div>
     </div>

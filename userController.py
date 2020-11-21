@@ -23,8 +23,8 @@ def home():
 @userController.route('/profile')
 def profile():
     if 'user' in session:
-        username = session.get('user')
-        user = User.query.filter_by(user_name=username).first()
+        email = session.get('user')
+        user = User.query.filter_by(user_email=email).first()
         return render_template('profile.html.jinja', info=user)
     else:
         flash('Please Login')
@@ -44,7 +44,7 @@ def login():
           found_user = User.query.filter_by(user_name=username).first()
           if found_user is not None and found_user.user_name == username:
              if bcrypt.check_password_hash(found_user.user_password, password):
-                  session['user'] = found_user.user_name
+                  session['user'] = found_user.user_email
                   flash('Login Successful')
                   return redirect(url_for('userController.home'))
              else:
@@ -68,12 +68,22 @@ def logout():
 @userController.route('/cart')
 def cart():
     if 'user' in session:
-        username = session.get('user')
-        cart = Cart.query.filter_by(customer_name=username).all()
-        return render_template("cart.html.jinja", serialnumber=cart.serial_number, productname=cart.product_name, productquantity=cart.product_quantity, productprice=cart.product_price)
+        email = session.get('user')
+        cart = Cart.query.filter_by(customer_email=email).all()
+        return render_template("cart.html.jinja", products=cart)
     else:
         flash('Please Login')
         return redirect(url_for('userController.login'))
+
+
+@userController.route('/cart/add/<productName>',methods=['POST', 'GET'])
+def addtocart(productName):
+    if request.method == 'POST' or productName:
+        email = session.get('user')
+        found_user = User.query.filter_by(user_email=email).first()
+        found_product = Product.query.filter_by(product_name=productName).first()
+        cart = Cart(product_name=found_product.product_name, customer_name=found_user.user_name, customer_email=found_user.user_email, product_image=found_product.product_image, product_price=found_product.product_price)
+        return redirect(url_for('cart'))
 
 
 @userController.route('/checkout', methods=['POST', 'GET'])
@@ -82,8 +92,8 @@ def checkout():
         if request.method == 'GET':
             return render_template('checkout.html.jinja')
         else:
-            username = session.get('user')
-            user = User.query.filter_by(user_name=username).first()
+            email = session.get('user')
+            user = User.query.filter_by(user_email=email).first()
             order = Order(customer_name=user.user_name, customer_address=user.user_address, customer_city=user.user_city,
                           customer_state=user.user_state, customer_phone=user.user_phonenumber, customer_zip=user.user_zip)
     else:
@@ -109,7 +119,7 @@ def signup():
         db.session.add(user)
         db.session.commit()
 
-        session['user'] = username
+        session['user'] = useremail
         return redirect(url_for('userController.home'))
 
     else:
