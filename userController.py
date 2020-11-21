@@ -76,6 +76,16 @@ def cart():
         return redirect(url_for('userController.login'))
 
 
+@userController.route('/cart/add/<productName>',methods=['POST', 'GET'])
+def addtocart(productName):
+    if request.method == 'POST' or productName:
+        email = session.get('user')
+        found_user = User.query.filter_by(user_email=email).first()
+        found_product = Product.query.filter_by(product_name=productName).first()
+        cart = Cart(product_name=found_product.product_name, customer_name=found_user.user_name, customer_email=found_user.user_email, product_image=found_product.product_image, product_price=found_product.product_price)
+        return redirect(url_for('cart'))
+
+
 @userController.route('/checkout', methods=['POST', 'GET'])
 def checkout():
     if 'user' in session:
