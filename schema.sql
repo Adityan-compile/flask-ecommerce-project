@@ -1,4 +1,3 @@
-
 DROP TABLE IF EXISTS Products;
  
      CREATE TABLE Products(
@@ -48,6 +47,7 @@ DROP TABLE IF EXISTS Cart;
             serial_number integer PRIMARY KEY AUTOINCREMENT,
             product_name text NOT NULL,
             customer_name text NOT NULL,
+            customer_email text NOT NULL,
             product_image text NOT NULL,
             product_quantity integer NOT NULL,
             product_price text NOT NULL

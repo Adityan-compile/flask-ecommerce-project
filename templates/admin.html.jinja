@@ -15,9 +15,8 @@ Dashboard
 <table class="table mx-auto">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">S.NO</th>
+      <th scope="col">ID</th>
       <th scope="col">PRODUCT NAME</th>
-      <th scope="col">PRODUCT ID</th>
       <th scope="col">PRODUCT PRICE</th>
       <th scope="col">PRODUCT IMAGE</th>
       <th scope="col">EDIT/DELETE PRODUCT</th>
@@ -26,9 +25,8 @@ Dashboard
   <tbody>
     {% for product in products %}
     <tr>
-      <th scope="row">{{product.serial_number}}</th>
+      <th scope="row">{{product.id}}</th>
       <td>{{product.product_name}}</td>
-      <td>{{product.product_id}}</td>
       <td>{{product.product_price}}</td>
       <td><img src="static/images/{{product.product_image}}" height="50px" width="50px"></td>
      <td>
