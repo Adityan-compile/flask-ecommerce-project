@@ -82,7 +82,10 @@ def addtocart(productName):
         email = session.get('user')
         found_user = User.query.filter_by(user_email=email).first()
         found_product = Product.query.filter_by(product_name=productName).first()
-        cart = Cart(product_name=found_product.product_name, customer_name=found_user.user_name, customer_email=found_user.user_email, product_image=found_product.product_image, product_price=found_product.product_price)
+        cart = Cart(product_name=found_product.product_name, customer_name=found_user.user_name, customer_email=found_user.user_email, 
+                    product_image=found_product.product_image, product_price=found_product.product_price)
+        db.session.add(cart)
+        db.session.commit()
         return redirect(url_for('cart'))
 
 

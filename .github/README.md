@@ -27,3 +27,8 @@
 + FLASK-SQLALCHEMY
 + BCRYPT
 + JINJA2
+
+
+#### Note:
++ The default admin username is 'admin' and password = '123455678'
++ The default admin has to add other admins(This feature will be implemented).
