@@ -2,7 +2,7 @@
 
 
 {% block title %}
-All Orders
+Orders | E-Com
 {% endblock %}
 
 {% block content %}
@@ -18,25 +18,21 @@ All Orders
       <th scope="col">ORDER ID</th>
       <th scope="col">PRODUCT NAME</th>
       <th scope="col">CUSTOMER NAME</th>
-      <th scope="col">ADDRESS</th>
-      <th scope="col">EMAIL</th>
       <th scope="col">PAYMENT</th>
       <th scope="col">TOTAL PRICE</th>
+      <th scope="col">View Order</th>
     </tr>
   </thead>
   <tbody>
     {% for order in orders %}
     <tr>
-      <th scope="row">{{order.order_id}}</th>
-      <td>{{order.product_name}}</td>
-      <td>{{order.cudtomer_name}}</td>
-      <td>{{order.customer_email}}</td>
-
-      <td><img src="static/images/{{product.product_image}}" height="50px" width="50px"></td>
-     <td>
-      <a href="{{url_for('adminController.editProduct')}}" type="submit" class="btn btn-primary">Edit</a>
-      <a href="{{url_for('adminController.deleteProduct', productname=product.product_name)}}" type="submit" class="btn btn-danger" >Delete</a>
-    </td>
+      <td>{{order.order_id}}</td>
+      <td>{{order.customer_name}}</td>
+      <td>{{order.payment_status}}</td>
+      <td>{{order.total_order_price}}</td>
+      <td>
+        <a href="{{url_for('adminController.admin')}}" class="btn btn-primary">View Order</a>
+      </td>
     </tr>
     {% endfor %}
   </tbody>

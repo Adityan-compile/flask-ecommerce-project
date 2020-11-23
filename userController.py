@@ -89,6 +89,16 @@ def addtocart(productName):
         return redirect(url_for('cart'))
 
 
+@userController.route('/cart/delete/<productName>', methods=['POST','GET'])
+def deletefromcart(productName):
+    if request.method == 'POST' or productName:
+        email = session.get('user')
+        cart = Cart.query.filter_by(user_email=email, product_name=productName).first()
+        db.session.delete(cart)
+        db.session.commit()
+        return redirect(url_for('userController.cart'))
+
+
 @userController.route('/checkout', methods=['POST', 'GET'])
 def checkout():
     if 'user' in session:

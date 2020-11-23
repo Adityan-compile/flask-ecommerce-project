@@ -64,16 +64,17 @@ def adminLogout():
 
 @adminController.route('/admin/products/create', methods=['POST', 'GET'])
 def create():
-    if request.method == "POST":
-        productname = request.form['productname']
-        productprice = request.form['productprice']
-        productbrand = request.form['productbrand']
-        stockstatus = request.form['stockstatus']
-        productdescription = request.form['productDescription']
-        file = request.files['filename']
+    if 'admin' in session:
+        if request.method == "POST":
+            productname = request.form['productname']
+            productprice = request.form['productprice']
+            productbrand = request.form['productbrand']
+            stockstatus = request.form['stockstatus']
+            productdescription = request.form['productDescription']
+            file = request.files['filename']
         
-        try:
-            if file.filename != '':
+            try:
+                if file.filename != '':
                     secured_filename = secure_filename(file.filename)
 
                     file.save(os.path.join(app.config['UPLOAD_FOLDER'], secured_filename))
@@ -85,13 +86,15 @@ def create():
 
                     flash("Product created successfully")
                     return redirect(url_for('adminController.admin'))
-            else:
-                flash('No file selected')
-                return redirect(url_for('adminController.create'))
+                else:
+                    flash('No file selected')
+                    return redirect(url_for('adminController.create'))
             
-        except:
-            flash("Error creating product")
-            return redirect(url_for('adminController.create'))
+            except:
+                  flash("Error creating product")
+                  return redirect(url_for('adminController.create'))
+        else:
+            return render_template('add-products.html.jinja')
 
     else:
         return render_template("add-products.html.jinja")
@@ -99,18 +102,39 @@ def create():
 
 @adminController.route('/admin/products/delete/<productname>', methods=['POST', 'GET'])
 def deleteProduct(productname):
-    if request.method == 'POST' or productname: 
-        productName = productname
-        found_product = Product.query.filter_by(product_name=productName).first()
-        filename = found_product.product_image
+    if request.method == 'POST' or productname:
+        if 'admin' in session:
+            productName = productname
+            found_product = Product.query.filter_by(product_name=productName).first()
+            filename = found_product.product_image
 
-        if found_product is not None:
-            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            db.session.delete(found_product)
-            db.session.commit()
-            flash('Product Deleted successfully')
-            return redirect(url_for('adminController.admin'))
+            if found_product is not None:
+                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                db.session.delete(found_product)
+                db.session.commit()
+                flash('Product Deleted successfully')
+                return redirect(url_for('adminController.admin'))
+            else:
+                flash('The product does not exist')
+                return redirect(url_for('adminController.admin'))
         else:
-            flash('The product does not exist')
-            return redirect(url_for('adminController.admin'))
+            flash('Please Login First')
+            return redirect(url_for('adminController.adminlogin'))
             
+
+@adminController.route('/admin/orders/all')
+def orders():
+    if 'admin' in session:
+        Orders = Order.query.all()
+        return render_template('admin-orders.html.jinja', orders=Orders)
+    else:
+        flash('Please Login First')
+        return redirect(url_for('adminController.adminlogin'))
+
+
+@adminController.route('/admin/users/all')
+def viewusers():
+    if 'admin' in session:
+        Users = User.query.all()
+
+        return render_template('users.html.jinja', users=Users)

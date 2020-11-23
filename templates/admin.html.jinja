@@ -2,7 +2,7 @@
 
 
 {% block title %}
-Dashboard
+Dashboard | E-Com
 {% endblock %}
 
 {% block content %}
@@ -25,7 +25,7 @@ Dashboard
   <tbody>
     {% for product in products %}
     <tr>
-      <th scope="row">{{product.id}}</th>
+      <td>{{product.id}}</td>
       <td>{{product.product_name}}</td>
       <td>{{product.product_price}}</td>
       <td><img src="static/images/{{product.product_image}}" height="50px" width="50px"></td>
