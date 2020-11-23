@@ -1,0 +1,38 @@
+{% extends "admin-template.html.jinja" %}
+
+{% block title %}
+Users | E-Com
+{% endblock %}
+
+{% block content %}
+
+<br />
+<h2 class="heading text-center text-monospace">All Users</h2>
+<br />
+
+<div class="table-responsive">
+<table class="table mx-auto">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">USER NAME</th>
+      <th scope="col">EMAIL</th>
+      <th scope="col">ADDRESS</th>
+      <th scope="col">PHONE</th>
+      <th scope="col">ZIP</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+      <td>{{user.user_name}}</td>
+      <td>{{user.user_email}}</td>
+      <td>{{user.user_address}}</td>
+      <td>{{user.user_phonenumber}}</td>
+     <td>{{user.user_zip}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+
+{% endblock %}
