@@ -41,7 +41,8 @@ def login():
           session.permanent = True
           username = request.form['Name']
           password = request.form['Password']
-          found_user = User.query.filter_by(user_name=username).first()
+          email = request.form['Email']
+          found_user = User.query.filter_by(user_email=email).first()
           if found_user is not None and found_user.user_name == username:
              if bcrypt.check_password_hash(found_user.user_password, password):
                   session['user'] = found_user.user_email
@@ -109,6 +110,10 @@ def checkout():
             user = User.query.filter_by(user_email=email).first()
             order = Order(customer_name=user.user_name, customer_address=user.user_address, customer_city=user.user_city,
                           customer_state=user.user_state, customer_phone=user.user_phonenumber, customer_zip=user.user_zip)
+            amount = 5100
+            payment_id = request.form['razorpay_payment_id']
+            razorpay_client.payment.capture(payment_id, amount)
+
     else:
         return redirect(url_for('userController.login'))
 
@@ -139,3 +144,6 @@ def signup():
         return render_template('signup.html.jinja')
 
 
+@userController.route('/test')
+def method_name():
+   return render_template('checkout.html.jinja')
