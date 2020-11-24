@@ -144,8 +144,3 @@ def signup():
 
     else:
         return render_template('signup.html.jinja')
-
-
-@userController.route('/test')
-def method_name():
-   return render_template('checkout.html.jinja')
