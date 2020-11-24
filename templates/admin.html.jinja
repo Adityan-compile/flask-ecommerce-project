@@ -30,8 +30,8 @@ Dashboard | E-Com
       <td>{{product.product_price}}</td>
       <td><img src="static/images/{{product.product_image}}" height="50px" width="50px"></td>
      <td>
-      <a href="{{url_for('adminController.editProduct')}}" type="submit" class="btn btn-primary">Edit</a>
-      <a href="{{url_for('adminController.deleteProduct', productname=product.product_name)}}" type="submit" class="btn btn-danger" >Delete</a>
+      <a href="{{url_for('adminController.editProduct')}}" type="submit" class="btn btn-primary fa fa-edit"> Edit</a>
+      <a href="{{url_for('adminController.deleteProduct', productname=product.product_name)}}" type="submit" class="btn btn-danger fa fa-trash"> Delete</a>
     </td>
     </tr>
     {% endfor %}

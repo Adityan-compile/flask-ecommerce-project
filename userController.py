@@ -10,14 +10,15 @@ from models import Cart
 # creating an object for user-controller
 userController = Blueprint('userController', __name__, template_folder="templates", static_folder="static")
 
-@userController.route('/home')
-@userController.route('/')
+@userController.route('/home', methods=['GET', 'POST'])
+@userController.route('/', methods=['GET', 'POST'])
 def home():
-    if "user" in session:
-        return render_template("index.html.jinja", products=Product.query.order_by(func.random()).all())
+    if request.method == 'POST':
+        search = request.form['search']
+        found_products = Product.query.filter_by(product_name=search).all()
+        return render_template('index.html.jinja', products=found_products)
     else:
-        flash('You are not logged in')
-        return redirect(url_for('userController.login'))
+        return render_template("index.html.jinja", products=Product.query.order_by(func.random()).all())
 
 
 @userController.route('/profile')
@@ -39,19 +40,20 @@ def login():
          return redirect(url_for('home'))
      elif request.method == "POST":
           session.permanent = True
-          username = request.form['Name']
+          # username = request.form['Name']
           password = request.form['Password']
-          found_user = User.query.filter_by(user_name=username).first()
-          if found_user is not None and found_user.user_name == username:
+          email = request.form['Email']
+          found_user = User.query.filter_by(user_email=email).first()
+          if found_user is not None and found_user.user_email ==email:
              if bcrypt.check_password_hash(found_user.user_password, password):
                   session['user'] = found_user.user_email
                   flash('Login Successful')
                   return redirect(url_for('userController.home'))
              else:
-                 flash('Incorrect username or password')
+                 flash('Incorrect Email or Password')
                  return redirect(url_for('userController.login'))
           else:
-              flash('Incorrect username or password')
+              flash('Incorrect Email or Password')
               return redirect(url_for('userController.login'))
   else:
       return render_template('login.html.jinja')
@@ -109,6 +111,11 @@ def checkout():
             user = User.query.filter_by(user_email=email).first()
             order = Order(customer_name=user.user_name, customer_address=user.user_address, customer_city=user.user_city,
                           customer_state=user.user_state, customer_phone=user.user_phonenumber, customer_zip=user.user_zip)
+            amount = 5100
+            payment_id = request.form['razorpay_payment_id']
+            razorpay_client.payment.capture(payment_id, amount)
+            return json.dumps(razorpay_client.payment.fetch(payment_id))
+
     else:
         return redirect(url_for('userController.login'))
 
@@ -137,5 +144,3 @@ def signup():
 
     else:
         return render_template('signup.html.jinja')
-
-
