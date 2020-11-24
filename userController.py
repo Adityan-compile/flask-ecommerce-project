@@ -10,14 +10,15 @@ from models import Cart
 # creating an object for user-controller
 userController = Blueprint('userController', __name__, template_folder="templates", static_folder="static")
 
-@userController.route('/home')
-@userController.route('/')
+@userController.route('/home', methods=['GET', 'POST'])
+@userController.route('/', methods=['GET', 'POST'])
 def home():
-    if "user" in session:
-        return render_template("index.html.jinja", products=Product.query.order_by(func.random()).all())
+    if request.method == 'POST':
+        search = request.form['search']
+        found_products = Product.query.filter_by(product_name=search).all()
+        return render_template('index.html.jinja', products=found_products)
     else:
-        flash('You are not logged in')
-        return redirect(url_for('userController.login'))
+        return render_template("index.html.jinja", products=Product.query.order_by(func.random()).all())
 
 
 @userController.route('/profile')
