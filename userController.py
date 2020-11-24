@@ -39,20 +39,20 @@ def login():
          return redirect(url_for('home'))
      elif request.method == "POST":
           session.permanent = True
-          username = request.form['Name']
+          # username = request.form['Name']
           password = request.form['Password']
           email = request.form['Email']
           found_user = User.query.filter_by(user_email=email).first()
-          if found_user is not None and found_user.user_name == username:
+          if found_user is not None and found_user.user_email ==email:
              if bcrypt.check_password_hash(found_user.user_password, password):
                   session['user'] = found_user.user_email
                   flash('Login Successful')
                   return redirect(url_for('userController.home'))
              else:
-                 flash('Incorrect username or password')
+                 flash('Incorrect Email or Password')
                  return redirect(url_for('userController.login'))
           else:
-              flash('Incorrect username or password')
+              flash('Incorrect Email or Password')
               return redirect(url_for('userController.login'))
   else:
       return render_template('login.html.jinja')
@@ -113,6 +113,7 @@ def checkout():
             amount = 5100
             payment_id = request.form['razorpay_payment_id']
             razorpay_client.payment.capture(payment_id, amount)
+            return json.dumps(razorpay_client.payment.fetch(payment_id))
 
     else:
         return redirect(url_for('userController.login'))

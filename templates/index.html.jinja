@@ -10,6 +10,26 @@ block head %}
 {% endblock %} 
 
 {% block body %}
+
+{% block nav %}
+
+{% if 'user' in session %}
+<li class="nav-item active">
+  <a class="nav-link" href="{{ url_for('userController.logout') }}">Logout</a>
+</li>
+{% else %}
+{% block nav %}
+<li class="nav-item active">
+    <a class="nav-link" href="{{ url_for('userController.signup') }}">Signup</a>
+  </li>
+{% endblock %}
+<li class="nav-item active">
+  <a class="nav-link" href="{{ url_for('userController.login') }}">Login</a>
+</li>
+{% endif %}
+
+{% endblock %}
+
 <div class="container mt-5">
   <div class="row">
     {% for product in products %}

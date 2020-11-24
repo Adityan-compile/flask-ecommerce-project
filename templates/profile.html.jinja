@@ -8,6 +8,12 @@
 
 {% block body %}
 
+{% block nav %}
+<li class="nav-item active">
+    <a class="nav-link" href="{{ url_for('userController.logout') }}">Logout</a>
+  </li>
+{% endblock %}
+
 <br />
 <p class="h2 text-center text-monospace">Profile</p>
 <br />
