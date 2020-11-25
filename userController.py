@@ -72,6 +72,8 @@ def cart():
     if 'user' in session:
         email = session.get('user')
         cart = Cart.query.filter_by(customer_email=email).all()
+        cartTotal = Cart.query(func.sum(cart.product_price)).filter_by(customer_email=email).all()
+        Cart = Cart()
         return render_template("cart.html.jinja", products=cart)
     else:
         flash('Please Login')
