@@ -23,9 +23,30 @@ def admin():
         return redirect(url_for('adminController.adminLogin'))
 
 
-@adminController.route('/admin/edit')
-def editProduct():
-    return render_template('admin.html.jinja')
+@adminController.route('/admin/products/edit/<productName>', methods=['POST', 'GET'])
+def editProduct(productName):
+    if productName:
+        product = Product.query.filter_by(product_name=productName).first()
+        if 'admin' in session:
+            return render_template('edit-products.html.jinja', product=product)
+        else:
+            flash('Please Login')
+            return redirect(url_for('adminController.adminLogin'))
+    elif request.method == 'POST':
+        if 'admin' in session:
+            productname = request.form['productname']
+            productprice = request.form['productprice']
+            productbrand = request.form['productbrand']
+            stockstatus = request.form['stockStatus']
+            productdescription = request.form['product_description']
+            # Rebuild editProduct method to fix error
+            product.product_name = productname
+            product.product_price = productprice
+            product.stock_status = stockstatus
+            product.product_description = productdescription
+        else:
+            flash('Please Login')
+            return redirect(url_for('adminController.adminLogin'))
 
 
 @adminController.route('/admin/login', methods=['POST', 'GET'])

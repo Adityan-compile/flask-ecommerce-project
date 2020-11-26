@@ -29,7 +29,7 @@ block head %}
 
 {% block search %}
 <form class="form-inline my-2 my-lg-0 ml-auto" method="POST" action="{{url_for('userController.home')}}">
-  <input class="form-control mr-sm-2" type="search" placeholder="Search for products" aria-label="Search">
+  <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search for products" aria-label="Search">
   <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
 </form>
 {% endblock %}
@@ -38,7 +38,7 @@ block head %}
   <div class="row">
     {% for product in products %}
     <div class="col-md-3 p-4">
-      <div class="card" style="width: 15rem; height: 24rem" onload="stock()">
+      <div class="card" style="width: 15rem; height: 24rem;" onload="stock()">
         <img
           src="static/images/{{product.product_image}}"
           alt="{{ product.product_name }}"
@@ -47,7 +47,7 @@ block head %}
         />
         <div class="card-body">
           <h5 class="card-title">{{product.product_name}}</h5>
-          <h6 class="card-subtitle">{{product.product_price}}</h6>
+          <h6 class="card-subtitle">&#8377;{{product.product_price}}</h6>
           <p class="card-text">{{product.product_description}}</p>
           <small class="card-text" id="stockstatus">{{product.stock_status}}</small>
           <a href="{{url_for('userController.addtocart', productName=product.product_name)}}" class="btn btn-primary">Add to cart</a>

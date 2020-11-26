@@ -1,0 +1,51 @@
+{% extends "admin-template.html.jinja" %}
+
+{% block title %} Edit Product {% endblock %}
+
+
+{% block content %}
+
+<br />
+<p class="h2 text-center text-monospace">Edit Product</p>
+
+<form class="p-5" method="POST" enctype="multipart/form-data" action="{{url_for('adminController.editProduct')}}">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="productName">Product Name:</label>
+        <input type="text" class="form-control" name="productname" id="productname" value="{{product.product_name}}">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="productPrice">Price:</label>
+        <input type="text" class="form-control" name="productprice" id="productprice" value="{{product.product_price}}">
+        <small>Price should be in Rupees</small>
+      </div>
+    </div>
+    <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="productBrand">Brand:</label>
+      <input type="text" class="form-control" id="productbrand" name="productbrand" value="{{product.product_brand}}">
+    </div>
+    <div class="form-group col-md-6">
+        <label for="stockStatus">Stock Status:</label>
+        <select id="stockstatus" class="form-control" name="stockstatus" value="{{product.stock_status}}">
+          <option>In Stock</option>
+          <option>Out of Stock</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="productDescription">Description:</label>
+      <textarea type="text" class="form-control" name="productDescription" maxlength="100" id="productDescription" maxlength="1000">{{product.product_description}}</textarea>
+      <small>Please add a short description in under 20 words</small>
+    </div>
+    <div class="form-group">
+      <div class="form-check">
+          <label for="productImage">Upload Image:</label>
+        <input type="file" id="productImage" accept=".png, .jpg, .jpeg" name="filename">
+        <small>Please use png,jpg or jpeg file extensions</small>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+
+{% endblock %}

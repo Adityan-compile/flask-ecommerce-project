@@ -27,10 +27,10 @@ Dashboard | E-Com
     <tr>
       <td>{{product.id}}</td>
       <td>{{product.product_name}}</td>
-      <td>{{product.product_price}}</td>
-      <td><img src="static/images/{{product.product_image}}" height="50px" width="50px"></td>
+      <td>&#8377;{{product.product_price}}</td>
+      <td><img src="{{url_for('static', filename='images/'+product.product_image)}}" height="50px" width="50px"></td>
      <td>
-      <a href="{{url_for('adminController.editProduct')}}" type="submit" class="btn btn-primary fa fa-edit"> Edit</a>
+      <a href="{{url_for('adminController.editProduct', productName=product.product_name)}}" type="submit" class="btn btn-primary fa fa-edit"> Edit</a>
       <a href="{{url_for('adminController.deleteProduct', productname=product.product_name)}}" type="submit" class="btn btn-danger fa fa-trash"> Delete</a>
     </td>
     </tr>
