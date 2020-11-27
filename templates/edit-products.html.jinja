@@ -34,15 +34,15 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="productDescription">Description:</label>
-      <textarea type="text" class="form-control" name="productDescription" maxlength="100" id="productDescription" maxlength="1000">{{product.product_description}}</textarea>
+      <label for="productdescription">Description:</label>
+      <textarea name="productdescription" class="form-control" id="productdescription">{{product.product_description}}</textarea>
       <small>Please add a short description in under 20 words</small>
     </div>
     <div class="form-group">
       <div class="form-check">
           <label for="productImage">Upload Image:</label>
-        <input type="file" id="productImage" accept=".png, .jpg, .jpeg" name="filename">
-        <small>Please use png,jpg or jpeg file extensions</small>
+        <input type="file" id="productImage" accept=".png, .jpg, .jpeg" name="productimage">
+        <small>Please reupload the image. This is done as a security measure</small>
       </div>
     </div>
     <button type="submit" class="btn btn-primary">Update</button>
