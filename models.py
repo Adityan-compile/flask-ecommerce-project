@@ -10,6 +10,7 @@ Base = declarative_base()
 metadata = Base.metadata
 
 
+# Model for admin table in database
 class Admin(db.Model):
     __tablename__ = 'Admins'
 
@@ -18,6 +19,7 @@ class Admin(db.Model):
     admin_password = db.Column(db.Text(100), nullable=False)
 
 
+# Model for cart table in database
 class Cart(db.Model):
     __tablename__ = 'Cart'
 
@@ -30,6 +32,7 @@ class Cart(db.Model):
     product_price = db.Column(db.Text, nullable=False)
 
 
+# Model for order table in database
 class Order(db.Model):
     __tablename__ = 'Orders'
 
@@ -44,6 +47,7 @@ class Order(db.Model):
     total_order_price = db.Column(db.Text, nullable=False)
 
 
+# Model for product table in database
 class Product(db.Model):
     __tablename__ = 'Products'
 
@@ -56,6 +60,7 @@ class Product(db.Model):
     stock_status = db.Column(db.Text, nullable=False)
 
 
+# Model for user table in database
 class User(db.Model):
     __tablename__ = 'Users'
 
@@ -68,6 +73,7 @@ class User(db.Model):
     user_city = Column(db.Text, nullable=False)
     user_state = db.Column(db.Text, nullable=False)
     user_zip = db.Column(db.Text, nullable=False)
+
 
 
 t_sqlite_sequence = Table(
