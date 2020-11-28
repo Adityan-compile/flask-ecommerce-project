@@ -51,23 +51,26 @@ def editProduct():
                 productimage.save(os.path.join(app.config['UPLOAD_FOLDER'], secured_filename))
                 
                 # Updating the sql database to new values
-                product.product_name = productname
-                product.product_price = productprice
-                product.product_brand = productbrand
-                product.stock_status = stockstatus
-                product.product_description = productdescription
-                product.product_image = secured_filename
+                found_product.product_name = productname
+                found_product.product_price = productprice
+                found_product.product_brand = productbrand
+                found_product.stock_status = stockstatus
+                found_product.product_description = productdescription
+                found_product.product_image = secured_filename
                 
                 # Commit database session
                 db.session.commit()
+
+                flash('Product updated successfully')
+                return redirect(url_for('adminController.admin'))
             else:
                 flash('No file selected')
-                return redirect(url_for('editproduct'))
+                return redirect(url_for('adminController.editproduct'))
         else:
             # Throw a 403 html status code
             abort(403)
     else:
-        return redirect(url_for('admin'))
+        return redirect(url_for('adminController.admin'))
 
 
 @adminController.route('/admin/products/edit/<productName>', methods=['GET', 'POST'])
