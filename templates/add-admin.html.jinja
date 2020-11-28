@@ -1,0 +1,28 @@
+{% extends "admin-template.html.jinja" %}
+
+{% block title %} Dashboard | Add Admin {% endblock %} 
+
+{% block content %}
+
+<br />
+<p class="h2 text-center text-monospace">Add Admin</p>
+<br />
+<br />
+
+<form class="p-5" action="#" method="POST">
+    <div class="form-group">
+      <label for="Name">Name:</label>
+      <input type="text" class="form-control" id="Name" name="Name" required />
+    </div>
+
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password:</label>
+      <input type="password" class="form-control" name="Password" id="Password" minlength="8" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+    <button type="reset" class="btn btn-danger">Clear</button>
+  </form>
+
+
+
+{% endblock %}

@@ -51,23 +51,26 @@ def editProduct():
                 productimage.save(os.path.join(app.config['UPLOAD_FOLDER'], secured_filename))
                 
                 # Updating the sql database to new values
-                product.product_name = productname
-                product.product_price = productprice
-                product.product_brand = productbrand
-                product.stock_status = stockstatus
-                product.product_description = productdescription
-                product.product_image = secured_filename
+                found_product.product_name = productname
+                found_product.product_price = productprice
+                found_product.product_brand = productbrand
+                found_product.stock_status = stockstatus
+                found_product.product_description = productdescription
+                found_product.product_image = secured_filename
                 
                 # Commit database session
                 db.session.commit()
+
+                flash('Product updated successfully')
+                return redirect(url_for('adminController.admin'))
             else:
                 flash('No file selected')
-                return redirect(url_for('editproduct'))
+                return redirect(url_for('adminController.editproduct'))
         else:
             # Throw a 403 html status code
             abort(403)
     else:
-        return redirect(url_for('admin'))
+        return redirect(url_for('adminController.admin'))
 
 
 @adminController.route('/admin/products/edit/<productName>', methods=['GET', 'POST'])
@@ -219,3 +222,34 @@ def viewusers():
         # Query database for users
         Users = User.query.all()
         return render_template('users.html.jinja', users=Users)
+
+
+@adminController.route('/admin/new', methods=['POST', 'GET'])
+def addAdmin():
+
+    if request.method == 'POST':
+        if 'admin' in session:
+
+            # Request form data
+            adminName = request.form['Name']
+            adminPassword = request.form['Password']
+
+            # Query database for data
+            found_admin = Admin.query.filter_by(admin_name=adminName).first()
+            
+            if found_admin != '':
+                flash('Admin already exists')
+                return redirect(url_for('adminController.addAdmin'))
+            else:
+                # Add data to database
+                admin = Admin(admin_name=adminName, admin_password=adminPassword)
+                db.session.add(admin)
+                db.session.commit()
+
+                flash('New admin created successfully')
+                return redirect(url_for('adminController.admin'))
+        else:
+            flash('Please Login')
+            return redirect(url_for('adminController.adminLogin'))
+    else:
+        return render_template('add-admin.html.jinja')
