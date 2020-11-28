@@ -222,3 +222,34 @@ def viewusers():
         # Query database for users
         Users = User.query.all()
         return render_template('users.html.jinja', users=Users)
+
+
+@adminController.route('/admin/new', methods=['POST', 'GET'])
+def addAdmin():
+
+    if request.method == 'POST':
+        if 'admin' in session:
+
+            # Request form data
+            adminName = request.form['Name']
+            adminPassword = request.form['Password']
+
+            # Query database for data
+            found_admin = Admin.query.filter_by(admin_name=adminName).first()
+            
+            if found_admin != '':
+                flash('Admin already exists')
+                return redirect(url_for('adminController.addAdmin'))
+            else:
+                # Add data to database
+                admin = Admin(admin_name=adminName, admin_password=adminPassword)
+                db.session.add(admin)
+                db.session.commit()
+
+                flash('New admin created successfully')
+                return redirect(url_for('adminController.admin'))
+        else:
+            flash('Please Login')
+            return redirect(url_for('adminController.adminLogin'))
+    else:
+        return render_template('add-admin.html.jinja')
