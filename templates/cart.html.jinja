@@ -4,11 +4,13 @@
 
 {% block body %}
 
+<!--
 {% block nav %}
 <li class="nav-item active">
     <a class="nav-link" href="{{ url_for('userController.logout') }}">Logout</a>
   </li>
 {% endblock %}
+-->
 
 <br />
 <p class="h2 text-center text-monospace">Cart</p>
@@ -39,8 +41,8 @@
   </table>
   <div class="info text-center">
     <label for="total" class="h4">Sub Total:</label>
-<h5 class="total" name="total" id="total">&#8377;100</h5>
-<a href="{{url_for('cart')}}" class="btn btn-primary">Proceed to Checkout</a>
+<h5 class="total" name="total" id="total">&#8377;</h5>
+<a href="{{url_for('userController.cart')}}" class="btn btn-primary">Proceed to Checkout</a>
   </div>
 
   <footer class="page-footer fixed-bottom">
