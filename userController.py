@@ -185,3 +185,8 @@ def signup():
 
     else:
         return render_template('signup.html.jinja')
+
+
+@userController.route('/test')
+def test():
+    return render_template('checkout.html.jinja')

@@ -49,7 +49,6 @@ DROP TABLE IF EXISTS Cart;
             customer_name text NOT NULL,
             customer_email text NOT NULL,
             product_image text NOT NULL,
-            product_quantity integer NOT NULL,
             product_price text NOT NULL
      );
 
