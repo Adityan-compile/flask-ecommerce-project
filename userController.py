@@ -93,9 +93,8 @@ def cart():
         # Get data from session and database
         email = session.get('user')
         cart = Cart.query.filter_by(customer_email=email).all()
-        cartTotal = Cart.query.filter_by(func.sum(cart.product_price), customer_email=email).all()
-        Cart = Cart()
-        return render_template("cart.html.jinja", products=cart)
+        cartTotal = Cart.query.with_entities(func.sum(Cart.product_price)).filter_by(customer_email=email).all()
+        return render_template("cart.html.jinja", carttotal=cartTotal, products=cart)
     else:
         flash('Please Login')
         return redirect(url_for('userController.login'))
@@ -185,3 +184,8 @@ def signup():
 
     else:
         return render_template('signup.html.jinja')
+
+
+@userController.route('/test')
+def test():
+    return render_template('checkout.html.jinja')

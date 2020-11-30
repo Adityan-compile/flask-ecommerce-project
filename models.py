@@ -28,7 +28,6 @@ class Cart(db.Model):
     customer_name =db.Column(db.Text, nullable=False)
     customer_email = db.Column(db.Text, nullable=False)
     product_image = db.Column(db.Text, nullable=False)
-    product_quantity = db.Column(db.Integer, nullable=False)
     product_price = db.Column(db.Text, nullable=False)
 
 
