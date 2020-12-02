@@ -115,7 +115,7 @@ def addtocart(productName):
                     product_image=found_product.product_image, product_price=found_product.product_price)
         db.session.add(cart)
         db.session.commit()
-        return redirect(url_for('cart'))
+        return redirect(url_for('userController.cart'))
 
 
 @userController.route('/cart/delete/<productName>', methods=['POST','GET'])
@@ -125,7 +125,7 @@ def deletefromcart(productName):
 
         # Get data from session and database and delete the corresponding product
         email = session.get('user')
-        cart = Cart.query.filter_by(user_email=email, product_name=productName).first()
+        cart = Cart.query.filter_by(customer_email=email, product_name=productName).first()
         db.session.delete(cart)
         db.session.commit()
         return redirect(url_for('userController.cart'))

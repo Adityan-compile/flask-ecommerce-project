@@ -19,7 +19,6 @@
       <tr>
         <th scope="col">S.NO</th>
         <th scope="col">Product Name</th>
-        <th scope="col">Quantity</th>
         <th scope="col">Price</th>
         <th scope="col">Image</th>
         <th scope="col">Delete</th>
@@ -28,13 +27,11 @@
     <tbody>
       {% for product in products %}
       <tr>
-        <th scope="row">1</th>
+        <th scope="row">{{product.serial_number}}</th>
         <td>{{product.product_name}}</td>
-        <td>{{product.product_quantity}}</td>
         <td>&#8377;{{product.product_price}}</td>
         <td><img src="{{url_for('static', filename='images/'+product.product_image)}}" style="width: 50px; height: 50px;"></td>
-        <td><form action="#" method="POST"><input type="number" min="0" max="10"></form></td>
-        <td><a href="{{url_for('userController.deletefromcart')}}" class="btn btn-danger fa fa-trash"> Remove</a>
+        <td><a href="{{url_for('userController.deletefromcart', productName=product.product_name)}}" class="btn btn-danger fa fa-trash"> Remove</a>
         {% endfor %}
       </tr>
     </tbody>
