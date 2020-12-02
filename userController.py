@@ -104,31 +104,41 @@ def cart():
 def addtocart(productName):
 
     if request.method == 'POST' or productName:
+        if 'user' in session:
+            # Get data from session and database
+            email = session.get('user')
+            found_user = User.query.filter_by(user_email=email).first()
+            found_product = Product.query.filter_by(product_name=productName).first()
 
-         # Get data from session and database
-        email = session.get('user')
-        found_user = User.query.filter_by(user_email=email).first()
-        found_product = Product.query.filter_by(product_name=productName).first()
-
-        # Declare and commit database models and data
-        cart = Cart(product_name=found_product.product_name, customer_name=found_user.user_name, customer_email=found_user.user_email, 
-                    product_image=found_product.product_image, product_price=found_product.product_price)
-        db.session.add(cart)
-        db.session.commit()
-        return redirect(url_for('cart'))
+            # Declare and commit database models and data
+            cart = Cart(product_name=found_product.product_name, customer_name=found_user.user_name, customer_email=found_user.user_email, 
+                        product_image=found_product.product_image, product_price=found_product.product_price)
+            db.session.add(cart)
+            db.session.commit()
+            return redirect(url_for('userController.cart'))
+        else:
+            flash('Please Login')
+            return redirect(url_for('userController.login'))
+    else:
+        abort(400)
 
 
 @userController.route('/cart/delete/<productName>', methods=['POST','GET'])
 def deletefromcart(productName):
 
     if request.method == 'POST' or productName:
-
-        # Get data from session and database and delete the corresponding product
-        email = session.get('user')
-        cart = Cart.query.filter_by(user_email=email, product_name=productName).first()
-        db.session.delete(cart)
-        db.session.commit()
-        return redirect(url_for('userController.cart'))
+        if 'user' in session:
+            # Get data from session and database and delete the corresponding product
+            email = session.get('user')
+            cart = Cart.query.filter_by(customer_email=email, product_name=productName).first()
+            db.session.delete(cart)
+            db.session.commit()
+            return redirect(url_for('userController.cart'))
+        else:
+            flash('Please Login')
+            return redirect(url_for('userController.login'))
+    else:
+        abort(400)
 
 
 @userController.route('/checkout', methods=['POST', 'GET'])
