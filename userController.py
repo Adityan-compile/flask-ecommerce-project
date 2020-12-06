@@ -17,7 +17,7 @@ def home():
     if request.method == 'POST':
         # Query form and database to search for the product
         search = request.form['search']
-        found_products = Product.query.filter_by(product_name=search).all()
+        found_products = Product.query.filter_by(Product.product_name.like('%'+search+'%')).all()
         return render_template('index.html.jinja', products=found_products)
     else:
         return render_template("index.html.jinja", products=Product.query.order_by(func.random()).all())
