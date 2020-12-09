@@ -25,7 +25,7 @@
     <div class="card-body">
 
       <p class="text-monospace pb-4 h3">Order Summary:</p>
-      <p class="text-monospace">Total Price: &#x20B9;</p>
+      <p class="text-monospace">Total Price: &#x20B9; {{total}}</p>
 
     <form action="{{url_for('userController.checkout')}}" method="POST">
         <input type="hidden" name="shopping_order_id" value="21" />
@@ -52,12 +52,12 @@
               alert(response.razorpay_signature);
             },
             prefill: {
-              name: "Name",
-              email: "email@example.com",
-              contact: "9999999999",
+              name: "{{user.user_name}}",
+              email: "{{user.user_email}}",
+              contact: "{{user.user_phonenumber}}",
             },
             notes: {
-              address: "E-Com HQ,Kannur",
+              address: "{{user.user_address}}",
             },
             theme: {
               color: "#528FF0",
@@ -72,6 +72,7 @@
             alert(response.error.reason);
             alert(response.error.metadata.order_id);
             alert(response.error.metadata.payment_id);
+            alert('Payment Failed');
           });
           document.getElementById("rzp-button1").onclick = function (e) {
             rzp1.open();

@@ -93,8 +93,16 @@ def cart():
         # Get data from session and database
         email = session.get('user')
         cart = Cart.query.filter_by(customer_email=email).all()
-        cartTotal = Cart.query.with_entities(func.sum(Cart.product_price)).filter(customer_email==email).all()
-        return render_template("cart.jinja", carttotal=cartTotal, products=cart)
+        cartTotal = Cart.query.with_entities(func.sum(Cart.product_price)).filter(Cart.customer_email==email).all()
+        cartTotal = str(cartTotal)
+        rm_chars = ['[' , ']' , '(' , ')' , ',']
+
+        for i in rm_chars:
+            cartTotal = cartTotal.replace(i, '')
+         
+        session['total'] = cartTotal
+
+        return render_template("cart.jinja", carttotal=str(cartTotal), products=cart)
     else:
         flash('Please Login')
         return redirect(url_for('userController.login'))
@@ -145,18 +153,24 @@ def deletefromcart(productName):
 def checkout():
 
     if 'user' in session:
+
+        # Get data from session and database
+        email = session.get('user')
+        Total = session.get('total')
+        user = User.query.filter_by(user_email=email).first()
+
         if request.method == 'GET':
-            return render_template('checkout.jinja')
+
+            return render_template('checkout.jinja', total=Total, user=user)
         else:
 
-            # Get data from session and database
-            email = session.get('user')
-            user = User.query.filter_by(user_email=email).first()
+            # Get data from database
+            products = Cart.query.filter(customer_email=email).all()
             order = Order(customer_name=user.user_name, customer_address=user.user_address, customer_city=user.user_city,
-                          customer_state=user.user_state, customer_phone=user.user_phonenumber, customer_zip=user.user_zip)
+                          customer_state=user.user_state, customer_phone=user.user_phonenumber, customer_zip=user.user_zip, payment_status ='Pending', product_name=products.product_name, total_order_price=Total )
             
             # Send data to payment gateway for checkout
-            amount = 5100
+            amount = Total*100
             payment_id = request.form['razorpay_payment_id']
             razorpay_client.payment.capture(payment_id, amount)
             return json.dumps(razorpay_client.payment.fetch(payment_id))

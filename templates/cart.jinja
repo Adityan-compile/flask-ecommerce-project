@@ -14,10 +14,11 @@
 
 <br />
 <p class="h2 text-center text-monospace">Cart</p>
+
+<div class="table-responsive p-4">
 <table class="table" style="overflow-y: auto;">
     <thead>
       <tr>
-        <th scope="col">S.NO</th>
         <th scope="col">Product Name</th>
         <th scope="col">Price</th>
         <th scope="col">Image</th>
@@ -27,24 +28,28 @@
     <tbody>
       {% for product in products %}
       <tr>
-        <th scope="row">{{product.serial_number}}</th>
         <td>{{product.product_name}}</td>
         <td>&#8377;{{product.product_price}}</td>
         <td><img src="{{url_for('static', filename='images/'+product.product_image)}}" style="width: 50px; height: 50px;"></td>
-        <td><a href="{{url_for('userController.deletefromcart', productName=product.product_name)}}" class="btn btn-danger fa fa-trash"> Remove</a>
+        <td><a href="{{url_for('userController.deletefromcart', productName=product.product_name)}}" class="btn btn-danger"> Remove</a>
         {% endfor %}
       </tr>
     </tbody>
   </table>
+</div>
+  <br />
+<div class="p-4">
+  <hr>
+
   <div class="info text-center">
     <label for="total" class="h4">Sub Total:</label>
-<h5 class="total" name="total" id="total">&#8377;</h5>
-<a href="{{url_for('userController.cart')}}" class="btn btn-primary">Proceed to Checkout</a>
+<h5 class="total" name="total" id="total">&#8377; <span id="total">{{carttotal}}</span></h5>
+<a href="{{url_for('userController.cart')}}"onclick="total()" class="btn btn-primary">Proceed to Checkout</a>
   </div>
+</div>
 
-  <footer class="page-footer fixed-bottom">
-  <a href="{{url_for('userController.home')}}" class="btn btn-link">Continue Shopping</a>
-  <small class="text-center">We currently limit the maximum order quantity to a single unit of the item.We apologise for the inconvinience caused.</small>
+  <footer class="page-footer text-center fixed-bottom">
+  <small class="text-center">We currently limit the maximum order quantity to a single unit.</small>
   </footer>
 
   {% endblock %}
