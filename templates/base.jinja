@@ -18,7 +18,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{url_for('static', filename='assets/apple-touch-icon.png')}}">
     <link rel="icon" type="image/png" sizes="32x32" href="url_for('static', filename='assets/favicon-32x32.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='assets/favicon-16x16.png')}}">
-    <link rel="manifest" href="{{url_for('static', filename='manifest/site.webmanifest')}}">
+    <link rel="manifest" href="{{url_for('static', filename='manifest/manifest.json')}}">
 
     {% block head %} {% endblock %}
   </head>
@@ -84,5 +84,6 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+  <script src="{{url_for('static', filename='javascript/script.js')}}"></script>
   </body>
 </html>
