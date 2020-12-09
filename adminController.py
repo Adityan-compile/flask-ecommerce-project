@@ -18,7 +18,7 @@ adminController = Blueprint('adminController', __name__, template_folder="templa
 def admin():
     if "admin" in session:
         Products = Product.query.all()
-        return render_template('admin.html.jinja', products=Products)
+        return render_template('admin.jinja', products=Products)
     else:
         flash('Please Login')
         return redirect(url_for('adminController.adminLogin'))
@@ -79,7 +79,7 @@ def editproduct(productName):
     if 'admin' in session:
         # Query database for product and render the edit page
         found_product = Product.query.filter_by(product_name=productName).first()
-        return render_template('edit-products.html.jinja', product=found_product)
+        return render_template('edit-products.jinja', product=found_product)
     else:
         # Throw a 403 html status code
         abort(403)
@@ -117,7 +117,7 @@ def adminLogin():
                  flash('Incorrect username or password')
                  return redirect(url_for('adminController.adminLogin'))
   else:
-      return render_template('admin-login.html.jinja')
+      return render_template('admin-login.jinja')
 
 
 @adminController.route('/admin/logout')
@@ -168,10 +168,10 @@ def create():
                   flash("Error creating product")
                   return redirect(url_for('adminController.create'))
         else:
-            return render_template('add-products.html.jinja')
+            return render_template('add-products.jinja')
 
     else:
-        return render_template("add-products.html.jinja")
+        return render_template("add-products.jinja")
 
 
 @adminController.route('/admin/products/delete/<productname>', methods=['POST', 'GET'])
@@ -208,7 +208,7 @@ def orders():
 
         # Query database for order data
         Orders = Order.query.all()
-        return render_template('admin-orders.html.jinja', orders=Orders)
+        return render_template('admin-orders.jinja', orders=Orders)
     else:
         flash('Please Login First')
         return redirect(url_for('adminController.adminlogin'))
@@ -221,7 +221,7 @@ def viewusers():
 
         # Query database for users
         Users = User.query.all()
-        return render_template('users.html.jinja', users=Users)
+        return render_template('users.jinja', users=Users)
 
 
 @adminController.route('/admin/new', methods=['POST', 'GET'])
@@ -252,4 +252,4 @@ def addAdmin():
             flash('Please Login')
             return redirect(url_for('adminController.adminLogin'))
     else:
-        return render_template('add-admin.html.jinja')
+        return render_template('add-admin.jinja')
