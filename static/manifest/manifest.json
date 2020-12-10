@@ -1,14 +1,19 @@
 {
     "name": "E-Com",
-    "theme_color": "#0275d8",
-    "background_color": "#fff",
+    "short_name": "E-Com",
     "icons": [
         {
-            "src": "static/images/shopping-cart.png",
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
             "type": "image/png"
         }
     ],
-    "start_url": "/",
-    "display": "standalone",
-    "orientation": "portrait"
+    "theme_color": "#528FF0",
+    "background_color": "#ffffff",
+    "display": "standalone"
 }

@@ -22,7 +22,7 @@
     />
     <link
       rel="manifest"
-      href="{{url_for('static', filename='manifest/site.webmanifest')}}"
+      href="{{url_for('static', filename='manifest/manifest.json')}}"
     />
     <title>Sign up | E-Com</title>
 
@@ -32,12 +32,9 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-      integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
-      crossorigin="anonymous"
-    />
+    
+    
+
   </head>
   <body>
     <br />
@@ -166,6 +163,6 @@
       integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
       crossorigin="anonymous"
     ></script>
-
+     <script src="{{url_for('static', filename='javascript/script.js')}}"></script>
   </body>
 </html>
