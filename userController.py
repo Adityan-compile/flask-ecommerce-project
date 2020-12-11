@@ -227,7 +227,7 @@ def changePassword():
 
             # Get data from session and database
             email = session.get('user')
-            user = User.query.filter_by(user_email=email).all()
+            user = User.query.filter_by(user_email=email).first()
             
             # Check passwords and update if the passwords match
             if oldPassword == user.user_password:
@@ -264,6 +264,23 @@ def paymentFail():
     else:
         flash('Please Login')
         return redirect(url_for('userController.login'))
+
+
+@userController.route('/user/account/delete', methods=['POST'])
+def deleteAccount():
+    if 'user' in session:
+        # Get session data and query database 
+        email = session.get('user')
+        user = User.query.filter_by(user_email=email).first()
+
+        # Delete user account
+        db.session.delete(user)
+        db.session.commit()
+
+        session.pop()
+
+        flash('Account Deleted Successfully')
+        return redirect(url_for('userController.signup'))
 
 
 @userController.route('/test')
