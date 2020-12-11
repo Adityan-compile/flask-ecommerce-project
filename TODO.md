@@ -2,8 +2,8 @@
 
 - [x] Fix product search 
 - [x] Add password change feature
+- [x] Add delete account feature
 - [] Finish payment gateway integration
-- [] Add delete account feature
 - [] Add recipt for checkout
 - [] Finish checkout
 - [] Change layout on checkout and profile.
