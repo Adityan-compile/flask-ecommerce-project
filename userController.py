@@ -95,9 +95,9 @@ def cart():
         cart = Cart.query.filter_by(customer_email=email).all()
         cartTotal = Cart.query.with_entities(func.sum(Cart.product_price)).filter(Cart.customer_email==email).all()
         cartTotal = str(cartTotal)
-        rm_chars = ['[' , ']' , '(' , ')' , ',']
+        chars = ['[' , ']' , '(' , ')' , ',']
 
-        for i in rm_chars:
+        for i in chars:
             cartTotal = cartTotal.replace(i, '')
          
         session['total'] = cartTotal
@@ -172,10 +172,10 @@ def checkout():
                           customer_state=user.user_state, customer_phone=user.user_phonenumber, customer_zip=user.user_zip, payment_status ='Pending', product_name=products.product_name, total_order_price=Total )
             
             # Send data to payment gateway for checkout
-            amount = Total*100
-            payment_id = request.form['razorpay_payment_id']
-            razorpay_client.payment.capture(payment_id, amount)
-            return json.dumps(razorpay_client.payment.fetch(payment_id))
+            order_amount = Total * 100
+            order_currency = 'INR'
+            order_receipt = 'order_rcptid_11'
+            razorpay_client.order.create(amount=order_amount, currency=order_currency, receipt=order_receipt)
 
     else:
         return redirect(url_for('userController.login'))
@@ -245,6 +245,24 @@ def changePassword():
                 return redirect(url_for('userController.changePassword'))
     else:
         flash('Please login')
+        return redirect(url_for('userController.login'))
+
+
+@userController.route('/user/checkout/payment/fail')
+def paymentFail():
+    if 'user' in session:
+        return render_template('payment-Failed.jinja')
+    else:
+        flash('Please Login')
+        return redirect(url_for('userController.login'))
+
+
+@userController.route('/user/checkout/payment/success')
+def paymentFail():
+    if 'user' in session:
+        return render_template('payment-Success.jinja')
+    else:
+        flash('Please Login')
         return redirect(url_for('userController.login'))
 
 
