@@ -1,0 +1,19 @@
+{% extends "base.jinja" %}
+
+{% block title %}E-Com | Payment Failed{% endblock %}
+
+{% block body %}
+
+<br />
+<p class="h2 text-center text-monospace">Payment Failed</p>
+<br />
+<br />
+
+<div class="container text-center">
+ <h3>Your Payment Failed</h3>
+ <h4>Sorry for the inconvinience</h4>
+ <h5>Please add products to cart and try again</h5>
+ <a href="{{url_for('userController.home')}}" class="btn btn-primary">Take me Home</a>
+</div>
+
+{% endblock %}

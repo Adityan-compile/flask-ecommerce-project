@@ -36,6 +36,7 @@ class Order(db.Model):
     __tablename__ = 'Orders'
 
     order_id = db.Column(db.Integer, primary_key=True)
+    order_date = db.Column(db.Text, nullable=False)
     customer_name = db.Column(db.Text, nullable=False)
     customer_email = db.Column(db.Text, nullable=False)
     customer_address = db.Column(db.Text, nullable=False)

@@ -23,7 +23,7 @@ def home():
         return render_template("index.jinja", products=Product.query.order_by(func.random()).all())
 
 
-@userController.route('/profile')
+@userController.route('user/profile')
 def profile():
 
     if 'user' in session:
@@ -95,9 +95,9 @@ def cart():
         cart = Cart.query.filter_by(customer_email=email).all()
         cartTotal = Cart.query.with_entities(func.sum(Cart.product_price)).filter(Cart.customer_email==email).all()
         cartTotal = str(cartTotal)
-        rm_chars = ['[' , ']' , '(' , ')' , ',']
+        chars = ['[' , ']' , '(' , ')' , ',']
 
-        for i in rm_chars:
+        for i in chars:
             cartTotal = cartTotal.replace(i, '')
          
         session['total'] = cartTotal
@@ -163,17 +163,19 @@ def checkout():
 
             return render_template('checkout.jinja', total=Total, user=user)
         else:
+             
+            current_date = date.today()
 
             # Get data from database
             products = Cart.query.filter(customer_email=email).all()
-            order = Order(customer_name=user.user_name, customer_address=user.user_address, customer_city=user.user_city,
+            order = Order(order_date=current_date, customer_name=user.user_name, customer_address=user.user_address, customer_city=user.user_city,
                           customer_state=user.user_state, customer_phone=user.user_phonenumber, customer_zip=user.user_zip, payment_status ='Pending', product_name=products.product_name, total_order_price=Total )
             
             # Send data to payment gateway for checkout
-            amount = Total*100
-            payment_id = request.form['razorpay_payment_id']
-            razorpay_client.payment.capture(payment_id, amount)
-            return json.dumps(razorpay_client.payment.fetch(payment_id))
+            order_amount = Total * 100
+            order_currency = 'INR'
+            order_receipt = 'order_rcptid_11'
+            razorpay_client.order.create(amount=order_amount, currency=order_currency, receipt=order_receipt)
 
     else:
         return redirect(url_for('userController.login'))
@@ -208,6 +210,60 @@ def signup():
 
     else:
         return render_template('signup.jinja')
+
+
+@userController.route('/user/changepassword', methods=['GET', 'POST'])
+def changePassword():
+
+    if 'user' in session:
+        
+        if request.method == 'GET':
+            return render_template('changePassword.jinja')
+        else:
+            # Get form data 
+            oldPassword = request.form['oldPassword']
+            newPassword = request.form['newPassword']
+            confirmPassword = request.form['confirmPassword']
+
+            # Get data from session and database
+            email = session.get('user')
+            user = User.query.filter_by(user_email=email).all()
+            
+            # Check passwords and update if the passwords match
+            if oldPassword == user.user_password:
+                if newPassword == confirmPassword:
+                    user.user_password = bcrypt.generate_password_hash(newPassword)
+                    db.session.commit()
+
+                    flash('Password changed successfully')
+                    return redirect(url_for('userController.profile'))
+                else:
+                    flash('Entered passwords does not match')
+                    return redirect(url_for('userController.changePassword'))
+            else:
+                flash('Password is incorrect')
+                return redirect(url_for('userController.changePassword'))
+    else:
+        flash('Please login')
+        return redirect(url_for('userController.login'))
+
+
+@userController.route('/user/checkout/payment/fail')
+def paymentFail():
+    if 'user' in session:
+        return render_template('payment-Failed.jinja')
+    else:
+        flash('Please Login')
+        return redirect(url_for('userController.login'))
+
+
+@userController.route('/user/checkout/payment/success')
+def paymentFail():
+    if 'user' in session:
+        return render_template('payment-Success.jinja')
+    else:
+        flash('Please Login')
+        return redirect(url_for('userController.login'))
 
 
 @userController.route('/test')

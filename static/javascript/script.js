@@ -9,6 +9,6 @@ if ("serviceWorker" in navigator) {
       console.log("Service worker error");
       console.log(error);
     });
-} else {
+}else{
   console.log("Service worker is not working");
 }
