@@ -1,11 +1,10 @@
-function total(){
+function total() {
+  let total = document.getElementById("total").innerHTML;
 
-    let total = document.getElementById('total').innerHTML
-
-    if(total === 'None'){
-        alert('No products in cart')
-        window.stop();
-    }
-
+  if (total === "None") {
+    alert("No products in cart");
+    window.stop();
+  }else{
+    return true
+  }
 }
-

@@ -30,6 +30,7 @@ DROP TABLE IF EXISTS Orders;
 
      CREATE TABLE Orders(
             order_id integer PRIMARY KEY AUTOINCREMENT,
+            order_date text NOT NULL,
             customer_name text NOT NULL,
             customer_email text NOT NULL,
             customer_address text NOT NULL,
