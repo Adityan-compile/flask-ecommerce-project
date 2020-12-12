@@ -3,16 +3,16 @@
 {% block title %} Profile | E-Com {% endblock %}
 
 {% block head %}
-<script src="{{url_for('static', filename='javascript/hidePassword.js')}}"></script>
+<link rel="stylesheet" href="{{url_for('static', filename='css/profile.css')}}">
 {% endblock %}
 
 {% block body %}
 
-{% block nav %}
+<!-- {% block nav %}
 <li class="nav-item active">
     <a class="nav-link" href="{{ url_for('userController.logout') }}">Logout</a>
   </li>
-{% endblock %}
+{% endblock %} -->
 
 <br />
 <p class="h2 text-center text-monospace">Profile</p>
@@ -20,25 +20,23 @@
 
 <div class="row">
 <div class="col-md-8 offset-md-2">
-
-<p class="h4 text-monospace">Name: {{info.user_name}}</p>
-
-<p class="h4 text-monospace">Email: {{info.user_email}}</p>
-
-<address class="h4 text-monospace">Address: {{info.user_address}}</address>
-
-<p class="h4 text-monospace">City: {{info.user_city}}</p>
-
-<p class="h4 text-monospace">State: {{info.user_state}}</p>
-
-<p class="h4 text-monospace">ZipCode: {{info.user_zipcode}}</p>
-
-<p class="h4 text-monospace">PhoneNumber: {{info.user_phonenumber}}</p>
-
+<div class="card mx-auto" style="width: 18rem;">
+  <ul class="list-group list-group-flush text-center">
+    <li class="list-group-item">Name: {{info.user_name}}</li>
+    <li class="list-group-item">Email: {{info.user_email}}</li>
+    <li class="list-group-item">Phone: {{info.user_phonenumber}}</li>
+    <li class="list-group-item">Address: {{info.user_address}}</li>
+    <li class="list-group-item">Zip Code: {{info.user_zip}}</li>
+    <li class="list-group-item">City: {{info.user_city}}</li>
+    <li class="list-group-item">State: {{info.user_state}}</li>
+  </ul>
+</div>
 </div>
 </div>
 
+<div class="buttons text-center p-4">
 <a href="{{url_for('userController.changePassword')}}" class="btn btn-warning">Change Password</a>
 <a href="{{url_for('userController.deleteAccount')}}" class="btn btn-danger">Delete Account</a>
+</div>
 
 {% endblock %}

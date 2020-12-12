@@ -23,7 +23,7 @@ def home():
         return render_template("index.jinja", products=Product.query.order_by(func.random()).all())
 
 
-@userController.route('user/profile')
+@userController.route('/user/profile')
 def profile():
 
     if 'user' in session:
@@ -72,7 +72,11 @@ def login():
               flash('Incorrect Credentials')
               return redirect(url_for('userController.login'))
   else:
-      return render_template('login.jinja')
+    if 'user' in session:
+        flash('Already Logged in')
+        return redirect(url_for('userController.home'))
+    else:
+        return render_template('login.jinja')
 
 
 @userController.route('/logout')
@@ -248,17 +252,8 @@ def changePassword():
         return redirect(url_for('userController.login'))
 
 
-@userController.route('/user/checkout/payment/fail')
-def paymentFail():
-    if 'user' in session:
-        return render_template('payment-Failed.jinja')
-    else:
-        flash('Please Login')
-        return redirect(url_for('userController.login'))
-
-
 @userController.route('/user/checkout/payment/success')
-def paymentFail():
+def paymentSuccess():
     if 'user' in session:
         return render_template('payment-Success.jinja')
     else:
@@ -266,7 +261,16 @@ def paymentFail():
         return redirect(url_for('userController.login'))
 
 
-@userController.route('/user/account/delete', methods=['POST'])
+@userController.route('/user/checkout/payment/success')
+def paymentFailed():
+    if 'user' in session:
+        return render_template('payment-Failed.jinja')
+    else:
+        flash('Please Login')
+        return redirect(url_for('userController.login'))
+
+
+@userController.route('/user/account/delete', methods=['POST', 'GET'])
 def deleteAccount():
     if 'user' in session:
         # Get session data and query database 
@@ -277,12 +281,12 @@ def deleteAccount():
         db.session.delete(user)
         db.session.commit()
 
-        session.pop()
+        session.pop('user')
 
         flash('Account Deleted Successfully')
         return redirect(url_for('userController.signup'))
 
 
-@userController.route('/test')
-def test():
-    return render_template('checkout.jinja')
+# @userController.route('/test')
+# def test():
+#     return render_template('checkout.jinja')
