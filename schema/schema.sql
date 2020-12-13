@@ -29,7 +29,9 @@ DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS Orders;
 
      CREATE TABLE Orders(
-            order_id integer PRIMARY KEY AUTOINCREMENT,
+            order_id text NOT NULL,
+            payment_id text NOT NULL,
+            razorpay_signature text NOT NULL,
             order_date text NOT NULL,
             customer_name text NOT NULL,
             customer_email text NOT NULL,

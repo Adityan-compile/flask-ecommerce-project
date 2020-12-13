@@ -35,7 +35,9 @@ class Cart(db.Model):
 class Order(db.Model):
     __tablename__ = 'Orders'
 
-    order_id = db.Column(db.Integer, primary_key=True)
+    order_id = db.Column(db.Text, nullable=False)
+    payment_id = db.Column(db.Text, nullable=False)
+    razorpay_signature = db.Column(db.Text, nullable=False)
     order_date = db.Column(db.Text, nullable=False)
     customer_name = db.Column(db.Text, nullable=False)
     customer_email = db.Column(db.Text, nullable=False)

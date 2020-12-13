@@ -7,6 +7,7 @@
 - [] Finish payment gateway integration
 - [] Add recipt for checkout
 - [] Finish checkout
+- [] Check if user email exists on sign up.
 - [] Add Order list for customers and order view for admin.
 - [] Deploy to Heroku
  
