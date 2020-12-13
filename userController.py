@@ -158,28 +158,34 @@ def checkout():
 
     if 'user' in session:
 
-        # Get data from session and database
-        email = session.get('user')
-        Total = session.get('total')
-        user = User.query.filter_by(user_email=email).first()
-
         if request.method == 'GET':
 
-            return render_template('checkout.jinja', total=Total, user=user)
-        else:
-             
+            # Get data from session and database
+            email = session.get('user')
+            Total = session.get('total')
+            user = User.query.filter_by(user_email=email).first()
+                                  
             current_date = date.today()
 
             # Get data from database
             products = Cart.query.filter(customer_email=email).all()
-            order = Order(order_date=current_date, customer_name=user.user_name, customer_address=user.user_address, customer_city=user.user_city,
-                          customer_state=user.user_state, customer_phone=user.user_phonenumber, customer_zip=user.user_zip, payment_status ='Pending', product_name=products.product_name, total_order_price=Total )
-            
+
             # Send data to payment gateway for checkout
             order_amount = Total * 100
             order_currency = 'INR'
             order_receipt = 'order_rcptid_11'
-            razorpay_client.order.create(amount=order_amount, currency=order_currency, receipt=order_receipt)
+            order = razorpay_client.order.create({ 'amount' : int(order_amount), 'currency' : order_currency, 'receipt' : order_receipt, 'payment_capture' : '1'})                      
+            
+            order = Order(order_id=order['order_id'],order_date=current_date, customer_name=user.user_name, customer_address=user.user_address, customer_city=user.user_city,
+                          customer_state=user.user_state, customer_phone=user.user_phonenumber, customer_zip=user.user_zip, payment_status ='Pending', product_name=products.product_name, total_order_price=Total )
+            
+            # Get api key from environment variables
+            API_KEY = os.getenv('API_KEY')
+
+            return render_template('checkout.jinja', total=Total, user=user, order=order, API_KEY=API_KEY)
+        else:
+            pass
+
 
     else:
         return redirect(url_for('userController.login'))
@@ -261,7 +267,7 @@ def paymentSuccess():
         return redirect(url_for('userController.login'))
 
 
-@userController.route('/user/checkout/payment/success')
+@userController.route('/user/checkout/payment/fail')
 def paymentFailed():
     if 'user' in session:
         return render_template('payment-Failed.jinja')

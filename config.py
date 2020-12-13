@@ -23,9 +23,9 @@ app = Flask(__name__)
 
 
 # Configuring Payment Gateway
-APP_ID = os.getenv('APP_ID')
+API_KEY = os.getenv('API_KEY')
 APP_SECRET = os.getenv('APP_SECRET')
-razorpay_client = razorpay.Client(auth=(APP_ID, APP_SECRET))
+razorpay_client = razorpay.Client(auth=(API_KEY, APP_SECRET))
 
 
 # configuring file uploads
