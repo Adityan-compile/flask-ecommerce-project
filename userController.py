@@ -179,13 +179,29 @@ def checkout():
             order = Order(order_id=order['order_id'],order_date=current_date, customer_name=user.user_name, customer_address=user.user_address, customer_city=user.user_city,
                           customer_state=user.user_state, customer_phone=user.user_phonenumber, customer_zip=user.user_zip, payment_status ='Pending', product_name=products.product_name, total_order_price=Total )
             
+            db.session.add(order)
+            db.session.commit()
             # Get api key from environment variables
             API_KEY = os.getenv('API_KEY')
 
             return render_template('checkout.jinja', total=Total, user=user, order=order, API_KEY=API_KEY)
         else:
-            pass
 
+            # Get json request data 
+            data = request.get_json()
+
+            payment_id = data['razorpay_payment_id']
+            razorpay_signature = data['razorpay_signature']
+            order_id = data['order_id']
+            
+            # Query database and update values
+            Order = Order.query.filter_by(order_id=order_id).first()
+            Order.payment_id = payment_id
+            order.razorpay_signature = razorpay_signature
+            db.session.commit()
+            
+            flash('Order Placed Successfully')
+            return redirect(url_for('userController.paymentSuccess'))
 
     else:
         return redirect(url_for('userController.login'))
