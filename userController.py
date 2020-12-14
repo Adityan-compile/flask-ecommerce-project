@@ -200,6 +200,11 @@ def checkout():
             order.razorpay_signature = razorpay_signature
             db.session.commit()
             
+            # Delete cart data from database 
+            cart = Cart.query.filter_by(customer_email=email).all()
+            db.session.delete(cart)
+            db.session.commit()
+
             flash('Order Placed Successfully')
             return redirect(url_for('userController.paymentSuccess'))
 
@@ -286,9 +291,15 @@ def paymentSuccess():
         return redirect(url_for('userController.login'))
 
 
-@userController.route('/user/checkout/payment/fail')
-def paymentFailed():
+@userController.route('/user/checkout/payment/fail/<_order_id>')
+def paymentFailed(_order_id):
     if 'user' in session:
+        
+        # Delete failed order from database   
+        order = razorpay_client.query.filter_by(order_id=_order_id).first()
+        db.session.delete(order)
+        db.session.commit()
+
         return render_template('payment-Failed.jinja')
     else:
         flash('Please Login')
