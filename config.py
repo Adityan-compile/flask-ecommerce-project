@@ -10,6 +10,7 @@ from flask_bcrypt import Bcrypt
 from  sqlalchemy.sql.expression import func
 from dotenv import load_dotenv
 from dotenv import find_dotenv
+from validate_email import validate_email
 import razorpay
 import json
 

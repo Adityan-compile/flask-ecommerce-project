@@ -45,21 +45,22 @@
             description: "Checkout for E-Com",
             image: "static/assets/android-chrome-512x512.png",
             order_id: "{{order['order_id']}}",
-            handler: function (response) {
+            handler: function(response){
               // alert(response.razorpay_payment_id);
               // alert(response.razorpay_order_id);
               // alert(response.razorpay_signature);
               
               // Create a POST request and post data.
-              var url = window.location.hostname+'/user/checkout';
-              var method = 'POST';
-              var request = new XMLHttpRequest();
+              var url = '/user/checkout'; // Route for sending the request
+              var method = 'POST'; // Method for the request
+              var request = new XMLHttpRequest(); // Create a new XMLHttpRequest object.
               var data = {
                 "razorpay_payment_id" : response.razorpay_payment_id,
                 "razorpay_signature" : response.razorpay_signature,
                 "order_id" : response.order_id
-              }
-
+              } // Data to be sent as json.
+              
+              // Configure the XHR request for sending POST request
               request.open(method, url, shouldBeAsync);
               request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             
@@ -89,7 +90,7 @@
             // alert(response.error.metadata.order_id);
             // alert(response.error.metadata.payment_id);
             alert('Payment Failed');
-            window.location.replace('/user/checkout/payment/fail')
+            window.location.replace('/user/checkout/payment/fail/'+response.error.metadata.order_id);
 
           });
           document.getElementById("rzp-button1").onclick = function (e) {

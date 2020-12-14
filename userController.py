@@ -200,6 +200,11 @@ def checkout():
             order.razorpay_signature = razorpay_signature
             db.session.commit()
             
+            # Delete cart data from database 
+            cart = Cart.query.filter_by(customer_email=email).all()
+            db.session.delete(cart)
+            db.session.commit()
+
             flash('Order Placed Successfully')
             return redirect(url_for('userController.paymentSuccess'))
 
@@ -220,20 +225,23 @@ def signup():
         city = request.form['City']
         state = request.form['State']
         zip_code = request.form['Zip']
-
-        # Generate hash of password for storage
-        pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
         
-        # Declare database models and data and commit to database
-        user = User(user_name=username, user_email=useremail, user_address=address, user_password=pw_hash,
-                    user_phonenumber=phonenumber, user_city=city, user_state=state, user_zip=zip_code)
-        db.session.add(user)
-        db.session.commit()
+        if validate_email(useremail, verify=True):
+            # Generate hash of password for storage
+            pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+        
+            # Declare database models and data and commit to database
+            user = User(user_name=username, user_email=useremail, user_address=address, user_password=pw_hash,
+                        user_phonenumber=phonenumber, user_city=city, user_state=state, user_zip=zip_code)
+            db.session.add(user)
+            db.session.commit()
 
-        # Set session data
-        session['user'] = useremail
-        return redirect(url_for('userController.home'))
-
+            # Set session data
+            session['user'] = useremail
+            return redirect(url_for('userController.home'))
+        else:
+            flash('Entered email does not exist')
+            return redirect(url_for('userController.signup'))
     else:
         return render_template('signup.jinja')
 
@@ -283,9 +291,15 @@ def paymentSuccess():
         return redirect(url_for('userController.login'))
 
 
-@userController.route('/user/checkout/payment/fail')
-def paymentFailed():
+@userController.route('/user/checkout/payment/fail/<_order_id>')
+def paymentFailed(_order_id):
     if 'user' in session:
+        
+        # Delete failed order from database   
+        order = razorpay_client.query.filter_by(order_id=_order_id).first()
+        db.session.delete(order)
+        db.session.commit()
+
         return render_template('payment-Failed.jinja')
     else:
         flash('Please Login')
