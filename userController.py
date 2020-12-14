@@ -220,20 +220,23 @@ def signup():
         city = request.form['City']
         state = request.form['State']
         zip_code = request.form['Zip']
-
-        # Generate hash of password for storage
-        pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
         
-        # Declare database models and data and commit to database
-        user = User(user_name=username, user_email=useremail, user_address=address, user_password=pw_hash,
-                    user_phonenumber=phonenumber, user_city=city, user_state=state, user_zip=zip_code)
-        db.session.add(user)
-        db.session.commit()
+        if validate_email(useremail, verify=True):
+            # Generate hash of password for storage
+            pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+        
+            # Declare database models and data and commit to database
+            user = User(user_name=username, user_email=useremail, user_address=address, user_password=pw_hash,
+                        user_phonenumber=phonenumber, user_city=city, user_state=state, user_zip=zip_code)
+            db.session.add(user)
+            db.session.commit()
 
-        # Set session data
-        session['user'] = useremail
-        return redirect(url_for('userController.home'))
-
+            # Set session data
+            session['user'] = useremail
+            return redirect(url_for('userController.home'))
+        else:
+            flash('Entered email does not exist')
+            return redirect(url_for('userController.signup'))
     else:
         return render_template('signup.jinja')
 
