@@ -1,6 +1,4 @@
-#!/env/bin/python3
 # coding: utf-8
-
 from sqlalchemy import Column, Integer, Table, Text
 from sqlalchemy.sql.sqltypes import NullType
 from sqlalchemy.ext.declarative import declarative_base
@@ -10,31 +8,47 @@ Base = declarative_base()
 metadata = Base.metadata
 
 
-# Model for admin table in database
 class Admin(db.Model):
     __tablename__ = 'Admins'
+    __table_args__ = {'extend_existing': True}
+
 
     id = db.Column(db.Integer, primary_key=True)
     admin_name = db.Column(db.Text, nullable=False)
-    admin_password = db.Column(db.Text(100), nullable=False)
+    admin_password = db.Column(db.Text, nullable=False)
 
 
-# Model for cart table in database
 class Cart(db.Model):
     __tablename__ = 'Cart'
 
     serial_number = db.Column(db.Integer, primary_key=True)
     product_name = db.Column(db.Text, nullable=False)
-    customer_name =db.Column(db.Text, nullable=False)
+    customer_name = db.Column(db.Text, nullable=False)
     customer_email = db.Column(db.Text, nullable=False)
     product_image = db.Column(db.Text, nullable=False)
     product_price = db.Column(db.Text, nullable=False)
 
 
-# Model for order table in database
+# t_Orders = Table(
+#     'Orders', metadata,
+#     Column('order_id', Text, nullable=False),
+#     Column('payment_id', Text, nullable=False),
+#     Column('razorpay_signature', Text, nullable=False),
+#     Column('order_date', Text, nullable=False),
+#     Column('customer_name', Text, nullable=False),
+#     Column('customer_email', Text, nullable=False),
+#     Column('customer_address', Text, nullable=False),
+#     Column('customer_zip', Text, nullable=False),
+#     Column('customer_phone', Text, nullable=False),
+#     Column('payment_status', Text, nullable=False),
+#     Column('product_name', Text, nullable=False),
+#     Column('total_order_price', Text, nullable=False)
+# )
+
 class Order(db.Model):
     __tablename__ = 'Orders'
 
+    serial_number = db.Column(db.Integer, primary_key=True)
     order_id = db.Column(db.Text, nullable=False)
     payment_id = db.Column(db.Text, nullable=False)
     razorpay_signature = db.Column(db.Text, nullable=False)
@@ -48,8 +62,6 @@ class Order(db.Model):
     product_name = db.Column(db.Text, nullable=False)
     total_order_price = db.Column(db.Text, nullable=False)
 
-
-# Model for product table in database
 class Product(db.Model):
     __tablename__ = 'Products'
 
@@ -62,8 +74,7 @@ class Product(db.Model):
     stock_status = db.Column(db.Text, nullable=False)
 
 
-# Model for user table in database
-class User(db.Model):
+class User(Base):
     __tablename__ = 'Users'
 
     user_id = db.Column(db.Integer, primary_key=True)
@@ -72,10 +83,9 @@ class User(db.Model):
     user_address = db.Column(db.Text, nullable=False)
     user_password = db.Column(db.Text, nullable=False)
     user_phonenumber = db.Column(db.Text, nullable=False)
-    user_city = Column(db.Text, nullable=False)
+    user_city = db.Column(db.Text, nullable=False)
     user_state = db.Column(db.Text, nullable=False)
     user_zip = db.Column(db.Text, nullable=False)
-
 
 
 t_sqlite_sequence = Table(

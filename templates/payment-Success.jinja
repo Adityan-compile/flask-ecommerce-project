@@ -1,1 +1,24 @@
 {% extends "base.jinja" %}
+
+{% block title %} E-Com | Success {% endblock %}
+
+{% block body %}
+
+<!-- {% block nav %}
+<li class="nav-item active">
+    <a class="nav-link" href="{{ url_for('userController.logout') }}">Logout</a>
+  </li>
+{% endblock %} -->
+
+<br />
+<p class="h2 text-center text-monospace">Payment Successful</p>
+<br />
+<br />
+
+<div class="container text-center">
+ <h3>Your Order is placed successfully</h3>
+ <h4>Thank you for using our services</h4>
+ <a href="{{url_for('userController.orders')}}" class="btn btn-primary">View Orders</a>
+</div>
+
+{% endblock %}
