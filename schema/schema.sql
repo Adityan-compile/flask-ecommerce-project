@@ -29,6 +29,7 @@ DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS Orders;
 
      CREATE TABLE Orders(
+            serial_number integer PRIMARY KEY AUTOINCREMENT,
             order_id text NOT NULL,
             payment_id text NOT NULL,
             razorpay_signature text NOT NULL,

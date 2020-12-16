@@ -4,6 +4,12 @@
 
 {% block body %}
 
+<!-- {% block nav %}
+<li class="nav-item active">
+    <a class="nav-link" href="{{ url_for('userController.logout') }}">Logout</a>
+  </li>
+{% endblock %} -->
+
 <br />
 <p class="h2 text-center text-monospace">Payment Failed</p>
 <br />
@@ -12,7 +18,7 @@
 <div class="container text-center">
  <h3>Your Payment Failed</h3>
  <h4>Sorry for the inconvinience</h4>
- <h5>Please add products to cart and try again</h5>
+ <h5>Please try again</h5>
  <a href="{{url_for('userController.home')}}" class="btn btn-primary">Take me Home</a>
 </div>
 
