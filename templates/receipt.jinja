@@ -1,0 +1,36 @@
+{% extends "base.jinja"%}
+
+{% block title %} Receipt | E-Com {% endblock %}
+
+{% block body %}
+
+<!-- {% block nav %}
+<li class="nav-item active">
+    <a class="nav-link" href="{{ url_for('userController.logout') }}">Logout</a>
+  </li>
+{% endblock %} -->
+
+<br />
+<p class="h2 text-center text-monospace">Payment Receipt</p>
+<br />
+
+<section>
+<div class="card w-75 mx-auto">
+  <div class="card-body">
+    <h5 class="card-title">Name: {{order.customer_name}}</h5>
+    <h5 class="card-text">Price: &#8377;{{order.total_order_price}}</h5>
+    <h5 class="card-text">Address: {{order.customer_address}}</h5>
+    <h5 class="card-text">Zip Code: {{order.customer_zip}}</h5>
+    <h5 class="card-text">Order ID: {{order.order_id}}
+    <h5 class="card-text">Payment Status: {{order.payment_status}}</h5>
+  </div>
+</div>
+</section>
+
+
+<footer class="page-footer text-center fixed-bottom">
+  <small class="text-center">Please take a screenshot of this receipt.</small>
+</footer>
+
+
+{% endblock %}

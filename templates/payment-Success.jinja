@@ -19,6 +19,7 @@
  <h3>Your Order is placed successfully</h3>
  <h4>Thank you for using our services</h4>
  <a href="{{url_for('userController.orders')}}" class="btn btn-primary">View Orders</a>
+ <a href="{{url_for('userController.orderReceipt', order_id=order_id)}}" class="btn btn-primary">View Order Receipt</a>
 </div>
 
 {% endblock %}

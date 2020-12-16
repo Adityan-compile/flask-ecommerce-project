@@ -198,6 +198,7 @@ def checkout():
             Order = Order.query.filter_by(order_id=order_id).first()
             Order.payment_id = payment_id
             order.razorpay_signature = razorpay_signature
+            order.payment_status = 'Successful'
             db.session.commit()
             
             # Delete cart data from database 
@@ -206,7 +207,7 @@ def checkout():
             db.session.commit()
 
             flash('Order Placed Successfully')
-            return redirect(url_for('userController.paymentSuccess'))
+            return redirect(url_for('userController.paymentSuccess', order_id=order_id))
 
     else:
         return redirect(url_for('userController.login'))
@@ -282,10 +283,10 @@ def changePassword():
         return redirect(url_for('userController.login'))
 
 
-@userController.route('/user/checkout/payment/success')
-def paymentSuccess():
+@userController.route('/user/checkout/payment/success/<order_id>')
+def paymentSuccess(order_id):
     if 'user' in session:
-        return render_template('payment-Success.jinja')
+        return render_template('payment-Success.jinja', order_id=order_id)
     else:
         flash('Please Login')
         return redirect(url_for('userController.login'))
@@ -321,6 +322,17 @@ def deleteAccount():
 
         flash('Account Deleted Successfully')
         return redirect(url_for('userController.signup'))
+
+
+@userController.route('/user/order/receipt/<order_id>')
+def orderRecipt(order_id):
+    
+    if 'user' in session:
+        order = Order.query.filter_by(order_id=order_id).first()
+        return render_template('receipt.jinja', order=order)
+    else:
+        flash('Please Login')
+        return redirect(url_for('userController.login'))
 
 
 # @userController.route('/test')
