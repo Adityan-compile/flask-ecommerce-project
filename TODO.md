@@ -6,7 +6,7 @@
 - [x] Change layout on checkout and profile.
 - [x] Add email validation on signup.
 - [x] Finish payment gateway integration
-- [] Add recipt for checkout
+- [X] Add recipt for checkout
 - [] Finish checkout
 - [] Add Order list for customers and order view for admin.
 - [] Setup Database migrations
