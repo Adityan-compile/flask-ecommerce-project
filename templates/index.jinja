@@ -40,6 +40,7 @@
 -->
 <div class="container mt-5">
   <div class="row">
+    {% if product is not none %}
     {% for product in products %}
     <div class="col-md-3 p-4">
       <div class="card" style="width: 15rem; height: 24rem;" onload="stock()">
@@ -59,6 +60,15 @@
       </div>
     </div>
     {% endfor %}
+    {% else %}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="false">&times;</span>
+        </button> 
+        Sorry, No Products are available currently.
+        </div>
+    {% endif %}
+
   </div>
 </div>
 {% endblock %}

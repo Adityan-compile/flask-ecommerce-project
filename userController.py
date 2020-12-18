@@ -88,7 +88,6 @@ def logout():
     return redirect(url_for('userController.login'))
 
 
-
 @userController.route('/cart')
 def cart():
 
@@ -96,13 +95,19 @@ def cart():
 
         # Get data from session and database
         email = session.get('user')
-        cart = Cart.query.filter_by(customer_email=email).all()
-        cartTotal = Cart.query.with_entities(func.sum(Cart.product_price)).filter(Cart.customer_email==email).all()
-        cartTotal = str(cartTotal)
-        chars = ['[' , ']' , '(' , ')' , ',']
+        products = Cart.query.filter_by(customer_email=email).all()
 
-        for i in chars:
-            cartTotal = cartTotal.replace(i, '')
+        # cartTotal = Cart.query.with_entities(func.sum(Cart.product_price)).filter(Cart.customer_email==email).all()
+        # cartTotal = str(cartTotal)
+        # chars = ['[' , ']' , '(' , ')' , ',']
+
+        # for i in chars:
+        #     cartTotal = cartTotal.replace(i, '')
+      
+        cartTotal = 0
+
+        for  product in products:
+            cartTotal += product.product_price
          
         session['total'] = cartTotal
 
@@ -199,12 +204,12 @@ def checkout():
             Order.payment_id = payment_id
             order.razorpay_signature = razorpay_signature
             order.payment_status = 'Successful'
-            db.session.commit()
             
-            # Delete cart data from database 
+            # Delete cart data from database and session.
             cart = Cart.query.filter_by(customer_email=email).all()
             db.session.delete(cart)
             db.session.commit()
+            session.pop('total')
 
             flash('Order Placed Successfully')
             return redirect(url_for('userController.paymentSuccess', order_id=order_id))
