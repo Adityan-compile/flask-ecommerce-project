@@ -88,7 +88,6 @@ def logout():
     return redirect(url_for('userController.login'))
 
 
-
 @userController.route('/cart')
 def cart():
 
@@ -97,6 +96,7 @@ def cart():
         # Get data from session and database
         email = session.get('user')
         products = Cart.query.filter_by(customer_email=email).all()
+
         # cartTotal = Cart.query.with_entities(func.sum(Cart.product_price)).filter(Cart.customer_email==email).all()
         # cartTotal = str(cartTotal)
         # chars = ['[' , ']' , '(' , ')' , ',']
