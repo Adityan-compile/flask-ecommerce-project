@@ -204,12 +204,12 @@ def checkout():
             Order.payment_id = payment_id
             order.razorpay_signature = razorpay_signature
             order.payment_status = 'Successful'
-            db.session.commit()
             
-            # Delete cart data from database 
+            # Delete cart data from database and session.
             cart = Cart.query.filter_by(customer_email=email).all()
             db.session.delete(cart)
             db.session.commit()
+            session.pop('total')
 
             flash('Order Placed Successfully')
             return redirect(url_for('userController.paymentSuccess', order_id=order_id))

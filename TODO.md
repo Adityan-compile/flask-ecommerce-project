@@ -7,7 +7,7 @@
 - [x] Add email validation on signup.
 - [x] Finish payment gateway integration
 - [X] Add recipt for checkout
-- [] Finish checkout
+- [x] Finish checkout
 - [] Add Order list for customers and order view for admin.
 - [] Setup Database migrations
 - [] Deploy to Heroku
