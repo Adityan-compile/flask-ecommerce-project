@@ -96,13 +96,18 @@ def cart():
 
         # Get data from session and database
         email = session.get('user')
-        cart = Cart.query.filter_by(customer_email=email).all()
-        cartTotal = Cart.query.with_entities(func.sum(Cart.product_price)).filter(Cart.customer_email==email).all()
-        cartTotal = str(cartTotal)
-        chars = ['[' , ']' , '(' , ')' , ',']
+        products = Cart.query.filter_by(customer_email=email).all()
+        # cartTotal = Cart.query.with_entities(func.sum(Cart.product_price)).filter(Cart.customer_email==email).all()
+        # cartTotal = str(cartTotal)
+        # chars = ['[' , ']' , '(' , ')' , ',']
 
-        for i in chars:
-            cartTotal = cartTotal.replace(i, '')
+        # for i in chars:
+        #     cartTotal = cartTotal.replace(i, '')
+      
+        cartTotal = 0
+
+        for  product in products:
+            cartTotal += product.product_price
          
         session['total'] = cartTotal
 
