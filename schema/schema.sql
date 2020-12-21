@@ -68,6 +68,9 @@ DROP TABLE IF EXISTS OrderProducts;
 
      CREATE TABLE OrderProducts(
                   serial_number integer PRIMARY KEY AUTOINCREMENT,
+                  order_id text NOT NULL,
                   product_name text NOT NULL,
-                  order_id text NOT NULL
+                  product_price text NOT NULL,
+                  product_brand text NOT NULL,
+                  product_image text NOT NULL
      );

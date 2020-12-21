@@ -273,9 +273,8 @@ def allOrders():
 def viewOrder(order_id):
     if 'admin' in session:
         # Get data from database
-        order = Order.query.filter_by(order_id=order_id)
-        productNames = OrderProduct.query.filter_by(order_id=order_id).all()
-        products = Product.query.filter(Product.product_name.in_(list(ProductNames)).all()
+        order = Order.query.filter_by(order_id=order_id).first()
+        products = OrderProduct.query.filter_by(order_id=order_id).all()
         return render_template('admin-view-order.jinja', order=order, products=products)
     else:
         abort(403)
