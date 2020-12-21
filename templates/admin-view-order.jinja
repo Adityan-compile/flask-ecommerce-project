@@ -1,0 +1,63 @@
+{% extends "admin-template.jinja" %}
+
+{% block title %}E-Com | View Order{% endblock %}
+
+{% block body %}
+
+
+<br />
+<h2 class="heading text-center text-monospace">View Order</h2>
+<br />
+
+<div class="container">
+	
+<div class="row">
+<div class="col-md-8 offset-md-2">
+<div class="card mx-auto" style="width: 25rem;">
+  <ul class="list-group list-group-flush text-center">
+    <li class="list-group-item">Order ID:{{order.order_id}}</li>
+    <li class="list-group-item">Total Price:&#8377;{{order.total_order_price}}</li>
+    <li class="list-group-item">Date:{{order.order_date}}</li>
+    <li class="list-group-item">Payment Status:{{order.order_payment_status}}</li>
+    <li class="list-group-item">Customer Name: {{order.customer_name}}</li>
+    <li class="list-group-item">Customer Address: {{order.customer_address}}</li>
+    <li class="list-group-item">Customer Phonenumber: {{order.customer_phone}}</li>
+    <li class="list-group-item">Customer Email: {{order.customer_email}}</li>
+    <li class="list-group-item">Zip Code: {{order.customer_zip}}</li>
+  </ul>
+</div>
+</div>
+</div>
+
+<br />
+<h2 class="heading text-center text-monospace">Products</h2>
+<br />
+
+<div class="row p-4">
+
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">PRODUCT NAME</th>
+      <th scope="col">BRAND</th>
+      <th scope="col">PRICE</th>
+      <th scope="col">Product Image
+    </tr>
+  </thead>
+  <tbody>
+  	{% for product in products %}
+    <tr>
+      <td>{{product.product_name}}</td>
+      <td>{{product.product_brand}}</td>
+      <td>{{product.product_price}}</td>
+      <td>
+        <img src="{{url_for('static', filename='images/'+product.product_image)}}" style="width: 50px; height: 50px;">
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</div>
+
+{% endblock %}

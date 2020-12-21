@@ -8,7 +8,6 @@
 - [x] Finish payment gateway integration
 - [X] Add recipt for checkout
 - [x] Finish checkout
-- [] Add Order list for customers and order view for admin.
-- [] Setup Database migrations
+- [x] Add Order list for customers and order view for admin
 - [] Deploy to Heroku
  

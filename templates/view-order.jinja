@@ -1,0 +1,50 @@
+{% extends "base.jinja" %}
+
+{% block title %}E-Com | View Order{% endblock %}
+
+{% block body %}
+
+
+<br />
+<h2 class="heading text-center text-monospace">View Order</h2>
+<br />
+
+<div class="container">
+	
+<div class="row">
+<div class="col-md-8 offset-md-2">
+<div class="card mx-auto" style="width: 25rem;">
+  <ul class="list-group list-group-flush text-center">
+    <li class="list-group-item">Order ID:{{order.order_id}}</li>
+    <li class="list-group-item">Total Price:&#8377;{{order.total_order_price}}</li>
+    <li class="list-group-item">Date:{{order.order_date}}</li>
+    <li class="list-group-item">Payment Status:{{order.order_payment_status}}</li>
+  </ul>
+</div>
+</div>
+</div>
+
+<div class="row p-4">
+
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">PRODUCT NAME</th>
+      <th scope="col">BRAND</th>
+      <th scope="col">PRICE</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for product in products %}
+    <tr>
+      <td>{{product.product_name}}</td>
+      <td>{{product.product_brand}}</td>
+      <td>{{product.product_price}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</div>
+
+{% endblock %}

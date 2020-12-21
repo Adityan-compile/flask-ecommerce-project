@@ -40,7 +40,6 @@ DROP TABLE IF EXISTS Orders;
             customer_zip text NOT NULL,
             customer_phone text NOT NULL,
             payment_status text NOT NULL,
-            product_name text NOT NULL,
             total_order_price text NOT NULL
      );
 
@@ -62,4 +61,13 @@ DROP TABLE IF EXISTS Admins;
             id integer PRIMARY KEY AUTOINCREMENT,
             admin_name text NOT NULL,
             admin_password text NOT NULL
+     );
+
+
+DROP TABLE IF EXISTS OrderProducts;
+
+     CREATE TABLE OrderProducts(
+                  serial_number integer PRIMARY KEY AUTOINCREMENT,
+                  product_name text NOT NULL,
+                  order_id text NOT NULL
      );

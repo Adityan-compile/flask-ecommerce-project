@@ -74,7 +74,7 @@ class Product(db.Model):
     stock_status = db.Column(db.Text, nullable=False)
 
 
-class User(Base):
+class User(db.Model):
     __tablename__ = 'Users'
 
     user_id = db.Column(db.Integer, primary_key=True)
@@ -86,6 +86,14 @@ class User(Base):
     user_city = db.Column(db.Text, nullable=False)
     user_state = db.Column(db.Text, nullable=False)
     user_zip = db.Column(db.Text, nullable=False)
+
+
+class OrderProduct(db.Model):
+    __tablename__ = 'OrderProducts'
+
+    serial_number = db.Column(db.Integer, primary_key=True)
+    product_name = db.Column(db.Text, nullable=False)
+    order_id = db.Column(db.Text, nullable=False)
 
 
 t_sqlite_sequence = Table(
