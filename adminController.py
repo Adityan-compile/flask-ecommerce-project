@@ -252,4 +252,30 @@ def addAdmin():
             flash('Please Login')
             return redirect(url_for('adminController.adminLogin'))
     else:
-        return render_template('add-admin.jinja')
+        if 'admin' in session:
+            return render_template('add-admin.jinja')
+        else:
+            abort(403)
+
+
+@adminController.route('/admin/orders/view/all')
+def allOrders():
+
+    if 'admin' in session:
+        # Query database for orders
+        Orders = Order.query.all()
+        return render_template('admin-orders.jinja', orders=Orders)
+    else:
+        abort(403)
+
+
+@adminController.route('/admin/orders/view/<order_id>')
+def viewOrder(order_id):
+    if 'admin' in session:
+        # Get data from database
+        order = Order.query.filter_by(order_id=order_id)
+        productNames = OrderProduct.query.filter_by(order_id=order_id).all()
+        products = Product.query.filter(Product.product_name.in_(list(ProductNames)).all()
+        return render_template('admin-view-order.jinja', order=order, products=products)
+    else:
+        abort(403)

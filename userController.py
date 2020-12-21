@@ -172,9 +172,6 @@ def checkout():
                                   
             current_date = date.today()
 
-            # Get data from database
-            products = Cart.query.filter(customer_email=email).all()
-
             # Send data to payment gateway for checkout
             order_amount = Total * 100
             order_currency = 'INR'
@@ -204,6 +201,16 @@ def checkout():
             Order.payment_id = payment_id
             order.razorpay_signature = razorpay_signature
             order.payment_status = 'Successful'
+
+            # Get data from database
+            products = Cart.query.filter(customer_email=email).all()
+
+            # Insert product data into database
+            for product in products:
+                orderProducts = OrderProduct(product_name=product.product_name, order_id=Order.order_id)
+                db.session.add(orderProducts)
+
+            db.session.commit() 
             
             # Delete cart data from database and session.
             cart = Cart.query.filter_by(customer_email=email).all()
@@ -335,6 +342,33 @@ def orderRecipt(order_id):
     if 'user' in session:
         order = Order.query.filter_by(order_id=order_id).first()
         return render_template('receipt.jinja', order=order)
+    else:
+        flash('Please Login')
+        return redirect(url_for('userController.login'))
+
+
+@userController.route('/user/orders/all')
+def allOrders():
+
+    if 'user' in session:
+        # Get data from session and database
+        email = session.get('user')
+        orders = Order.query.filter_by(customer_email=email).all()
+        return render_template('orders.jinja', orders=orders)
+    else:
+        flash('Please Login')
+        return redirect(url_for('userController.login'))
+
+
+@userController.route('/user/order/view/<order_id>')
+def viewOrder(order_id):
+
+    if 'user' in session:
+        # Get data from database
+        order = Order.query.filter_by(order_id=order_id)
+        productNames = OrderProduct.query.filter_by(order_id=order_id).all()
+        products = Product.query.filter(Product.product_name.in_(list(ProductNames)).all()
+        return render_template('view-order.jinja', order=order, products=products)
     else:
         flash('Please Login')
         return redirect(url_for('userController.login'))
