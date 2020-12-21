@@ -207,7 +207,8 @@ def checkout():
 
             # Insert product data into database
             for product in products:
-                orderProducts = OrderProduct(product_name=product.product_name, order_id=Order.order_id)
+                orderProducts = OrderProduct(order_id=Order.order_id, product_name=product.product_name, product_price=product.product_price, 
+                                             product_brand=product.product_brand, product_image=product.product_image)
                 db.session.add(orderProducts)
 
             db.session.commit() 
@@ -366,8 +367,7 @@ def viewOrder(order_id):
     if 'user' in session:
         # Get data from database
         order = Order.query.filter_by(order_id=order_id)
-        productNames = OrderProduct.query.filter_by(order_id=order_id).all()
-        products = Product.query.filter(Product.product_name.in_(list(ProductNames)).all()
+        products = OrderProduct.query.filter_by(order_id=order_id).all()
         return render_template('view-order.jinja', order=order, products=products)
     else:
         flash('Please Login')

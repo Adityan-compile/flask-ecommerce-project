@@ -92,9 +92,12 @@ class OrderProduct(db.Model):
     __tablename__ = 'OrderProducts'
 
     serial_number = db.Column(db.Integer, primary_key=True)
-    product_name = db.Column(db.Text, nullable=False)
     order_id = db.Column(db.Text, nullable=False)
-
+    product_name = db.Column(db.Text, nullable=False)
+    product_price = db.Column(db.Text, nullable=False)
+    product_brand = db.Column(db.Text, nullable=False)
+    product_image = db.Column(db.Text, nullable=False)
+    
 
 t_sqlite_sequence = Table(
     'sqlite_sequence', metadata,
