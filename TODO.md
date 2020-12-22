@@ -9,5 +9,5 @@
 - [X] Add recipt for checkout
 - [x] Finish checkout
 - [x] Add Order list for customers and order view for admin
-- [] Deploy to Heroku
+- [x] Deploy to Heroku
  
