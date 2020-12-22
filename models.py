@@ -59,7 +59,6 @@ class Order(db.Model):
     customer_zip = db.Column(db.Text, nullable=False)
     customer_phone = db.Column(db.Text, nullable=False)
     payment_status = db.Column(db.Text, nullable=False)
-    product_name = db.Column(db.Text, nullable=False)
     total_order_price = db.Column(db.Text, nullable=False)
 
 class Product(db.Model):
