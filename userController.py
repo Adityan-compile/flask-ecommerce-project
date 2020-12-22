@@ -17,8 +17,12 @@ def home():
     if request.method == 'POST':
         # Query form and database to search for the product
         search = request.form['search']
-        found_products = Product.query.filter_by(Product.product_name.like('%'+search+'%')).all()
-        return render_template('index.jinja', products=found_products)
+        found_products = Product.query.filter(Product.product_name.like('%'+search+'%')).all()
+        if found_products is not None:
+            return render_template('index.jinja', products=found_products)
+        else:
+            flash('No Products Found')
+            return redirect(url_for('userController.home'))
     else:
         return render_template("index.jinja", products=Product.query.order_by(func.random()).all())
 
@@ -88,6 +92,35 @@ def logout():
     return redirect(url_for('userController.login'))
 
 
+# @userController.route('/cart')
+# def cart():
+
+#     if 'user' in session:
+
+#         # Get data from session and database
+#         email = session.get('user')
+#         products = Cart.query.filter_by(customer_email=email).all()
+
+#         cartTotal = Cart.query.with_entities(func.sum(Cart.product_price)).filter(Cart.customer_email==email).all()
+#         cartTotal = str(cartTotal)
+#         chars = ['[' , ']' , '(' , ')' , ',']
+
+#         for i in chars:
+#             cartTotal = cartTotal.replace(i, '')
+
+#         cartTotal = 0
+
+#         for product in products:
+#             cartTotal += product.product_price
+
+#         session['total'] = cartTotal
+
+#         return render_template("cart.jinja", carttotal=cartTotal, products=products)
+#     else:
+#         flash('Please Login')
+#         return redirect(url_for('userController.login'))
+
+
 @userController.route('/cart')
 def cart():
 
@@ -97,21 +130,17 @@ def cart():
         email = session.get('user')
         products = Cart.query.filter_by(customer_email=email).all()
 
-        # cartTotal = Cart.query.with_entities(func.sum(Cart.product_price)).filter(Cart.customer_email==email).all()
-        # cartTotal = str(cartTotal)
-        # chars = ['[' , ']' , '(' , ')' , ',']
+        #Total cart
+        cartTotal = Cart.query.with_entities(func.sum(Cart.product_price)).filter(Cart.customer_email==email).all()
+        cartTotal = str(cartTotal)
+        chars = ['[', ']', '(', ')', ',']
 
-        # for i in chars:
-        #     cartTotal = cartTotal.replace(i, '')
-      
-        cartTotal = 0
+        for char in chars:
+            cartTotal = cartTotal.replace(char, '')
 
-        for  product in products:
-            cartTotal += product.product_price
-         
         session['total'] = cartTotal
 
-        return render_template("cart.jinja", carttotal=str(cartTotal), products=cart)
+        return render_template('cart.jinja', carttotal=cartTotal, products=products)
     else:
         flash('Please Login')
         return redirect(url_for('userController.login'))
@@ -240,7 +269,7 @@ def signup():
         state = request.form['State']
         zip_code = request.form['Zip']
         
-        if validate_email(useremail, verify=True):
+        if validate_email(useremail):
             # Generate hash of password for storage
             pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
         
@@ -254,7 +283,7 @@ def signup():
             session['user'] = useremail
             return redirect(url_for('userController.home'))
         else:
-            flash('Entered email does not exist')
+            flash("Email doesn't exist")
             return redirect(url_for('userController.signup'))
     else:
         return render_template('signup.jinja')
@@ -266,7 +295,7 @@ def changePassword():
     if 'user' in session:
         
         if request.method == 'GET':
-            return render_template('changePassword.jinja')
+            return render_template('change-password.jinja')
         else:
             # Get form data 
             oldPassword = request.form['oldPassword']
