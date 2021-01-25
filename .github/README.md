@@ -9,7 +9,7 @@
 #### Features:
 + Admin Dashboard
 + User Profile
-+ Payment Gateway integration (In progress).
++ Payment Gateway integration.
 + Monolithic Architecture
 + Easy maintenance
 
@@ -25,10 +25,3 @@
 + SQL
 + SQLITE3
 + FLASK-SQLALCHEMY
-+ BCRYPT
-+ JINJA2
-
-
-#### Note:
-+ The default admin username is 'admin' and password = '123455678'
-+ The default admin has to add other admins.
