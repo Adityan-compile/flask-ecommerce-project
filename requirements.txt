@@ -8,7 +8,7 @@ flask-template==0.4.4
 Flask-WhooshAlchemy==0.56
 gunicorn==20.0.4
 itsdangerous==1.1.0
-Jinja2==2.11.2
+Jinja2==2.11.3
 MarkupSafe==1.0
 python-dotenv==0.15.0
 razorpay==1.2.0
