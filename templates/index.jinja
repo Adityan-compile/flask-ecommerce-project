@@ -53,9 +53,11 @@
         <div class="card-body">
           <h5 class="card-title">{{product.product_name}}</h5>
           <h6 class="card-subtitle">&#8377;{{product.product_price}}</h6>
-          <p class="card-text">{{product.product_description}}</p>
+          <small class="card-text">{{product.product_description}}</small>
+          <div>
           <small class="card-text" id="stockstatus">{{product.stock_status}}</small>
           <a href="{{url_for('userController.addtocart', productName=product.product_name)}}" class="btn btn-primary">Add to cart</a>
+        </div>
         </div>
       </div>
     </div>
