@@ -3,7 +3,7 @@
 
 + #### A simple e commerce project created in python using the micro web framework flask.
 
-+ #### View the live project <a href="flask-ecommerce-project.herokuapp.com">here</a>.
++ #### View the live project <a href="https://flask-ecommerce-project.herokuapp.com">here</a>.
 
 #### Languages, Frameworks, Technologies & Libraries:
 + PYTHON
